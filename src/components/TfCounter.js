@@ -19,6 +19,7 @@ const TfCounter = ({ nonst }) => {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+       'Access-Control-Allow-Origin': '*',
         'Cookie': 'testtt'
       },
       body: JSON.stringify(values, undefined, 2)
