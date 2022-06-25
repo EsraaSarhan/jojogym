@@ -1335,6 +1335,7 @@ a:focus {
 
 #mainnav.st-2 .menu {
     padding-left: 0;
+    display: flex;
 }
 
 #mainnav.st-2 .menu li a {

@@ -13,8 +13,8 @@ function useFetchData( url) {
           
           {
             method: "GET",
-            credentials: 'include'
-
+            credentials: 'include',
+            headers:  new Headers({ Accept: 'application/json' })
           })
           .then((res) => console.log(res))
           .then((result) => {
