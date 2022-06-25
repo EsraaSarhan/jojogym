@@ -82,7 +82,7 @@ const Customers = () => {
 
                   {data && (
                     data.map((user, index) => (
-                      <tr  key="{index}">
+                      <tr key={user.id}>
                         <th scope="row">{index}</th>
                         <td>{user.first_name}</td>
                         <td>{user.last_name}</td>
