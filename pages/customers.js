@@ -10,8 +10,8 @@ import useFetchData from '../src/components/customHooks/useFetchData'
 
 const Customers = () => {
   const token = '55f376af8a137b773f72cccd5a184bdd4fec3f61'; 
-  //const { data } = useFetchData('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/?page=1&page_size=10');
-  //console.log(data);
+  const { data } = useFetchData('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/?page=1&page_size=10');
+  console.log(data);
   let sort = 6;
   const [active, setActive] = useState(1);
   const [state, setstate] = useState([]);
