@@ -1,5 +1,7 @@
 import  React, {setState, setPosts, useEffect} from 'react';
 import { useForm } from "react-cool-form";
+//import Cookies from 'universal-cookie';
+import Cookies from 'js-cookie';
 
 
 
@@ -34,6 +36,10 @@ const TfCounter = ({ nonst }) => {
        if(result.key){
           //window.location.href = '/customers';
        // setState({redirect:true})
+
+ //const cookies = new Cookies();
+// cookies.set('myCat', 'Pacman', { path: '/' });
+console.log(Cookies.get('tabstyle'), Cookies.get('csrftoken'), Cookies.get()); // Pacman
 
        }
       },
