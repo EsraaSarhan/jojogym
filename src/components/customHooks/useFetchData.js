@@ -13,14 +13,15 @@ function useFetchData( url) {
           
           {
             method: "GET",
-            credentials: "same-origin",
-            headers:  new Headers({ Accept: 'application/json' })
+            credentials: 'include'
 
           })
           .then((res) => console.log(res))
           .then((result) => {
             setPosts(result);
-          });
+          }).catch((err) => {
+            console.log(err);
+        });
       }, []);
 
     return { data };
