@@ -20,7 +20,7 @@ const TfCounter = ({ nonst }) => {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
        //'Access-Control-Allow-Origin': '*',
-       'Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS',
+       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         'Cookie': 'testtt'
       },
       body: JSON.stringify(values, undefined, 2)
