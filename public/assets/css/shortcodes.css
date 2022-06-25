@@ -598,7 +598,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  background: url(../images/thumbnails/studying-classroom.jpg) center center
+  background: url(../images/background/studying-classroom.0ebfada3.jpg) center center
     no-repeat;
   background-size: cover;
   -webkit-mask-image: url(../images/background/mask3.png);
@@ -613,6 +613,7 @@
 .tf-page-title .overlay {
   background-position: 50%;
   background-size: cover;
+  background-image: url(../images/background/studying-classroom.0ebfada3.jpg);
 }
 
 .page-title {
