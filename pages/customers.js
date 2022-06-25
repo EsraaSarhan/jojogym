@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import PageBanner from "../src/components/PageBanner";
-import PagginationFuntion from "../src/components/PagginationFuntion";
 import { LeftArrow, RightArrow } from "../src/Icons";
 import Layout from "../src/layouts/Layout";
 import { getPagination, pagination } from "../src/utils";
@@ -22,30 +21,30 @@ const Customers = () => {
     setstate(getPagination(list.length, sort));
   }, [active]);
 
-  function deleteUser(id) {
-    console.log(id, token)
+  // function deleteUser(id) {
+  //   console.log(id, token)
    
        
-    fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/' + id, {
-      method: 'DELETE',
-      headers:{
-        'Authorization': 'Token ' + token
-      }
+  //   fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/' + id, {
+  //     method: 'DELETE',
+  //     headers:{
+  //       'Authorization': 'Token ' + token
+  //     }
      
-    })
-    .then(res => res.json())
-    .then(
-      (result) => {
-        console.log(result);
+  //   })
+  //   .then(res => res.json())
+  //   .then(
+  //     (result) => {
+  //       console.log(result);
        
-      },
-      (error) => {
-        console.log(error)
+  //     },
+  //     (error) => {
+  //       console.log(error)
 
        
-      }
-    )
-  }
+  //     }
+  //   )
+  // }
 
   return (
     <Layout bodyClass={"classes"}>
@@ -83,7 +82,7 @@ const Customers = () => {
 
                   {data && (
                     data.map((user, index) => (
-                      <tr>
+                      <tr  key="{index}">
                         <th scope="row">{index}</th>
                         <td>{user.first_name}</td>
                         <td>{user.last_name}</td>
