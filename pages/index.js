@@ -1,9 +1,4 @@
-import Link from "next/link";
 import { useEffect } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import LatestProgramSlider from "../src/components/LatestProgramSlider";
-import PhotoGallerySlider from "../src/components/PhotoGallerySlider";
-import TestimonialSlider from "../src/components/TestimonialSlider";
 // import TfCounter from "../src/components/TfCounter";
 import {
   LeftArrow,
