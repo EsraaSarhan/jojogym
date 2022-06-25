@@ -59,7 +59,13 @@
         padding: 30px;
     }
     .inner-page .nav-wrap {
-        left: 24%;
+        right: 16%;
+    }
+    .inner-contact ul li{
+        font-size: 16px;
+    }
+    .inner-contact ul li:last-child{
+        font-size: 18px;
     }
     .inner-page #header-search,
     .inner-page .menu-bar-right {
@@ -88,6 +94,9 @@
     }
     #mainnav .menu li a{
         font-size: 16px;
+    }
+    .inner-page .bg-inner1{
+        max-width: 17% ;
     }
 }
 

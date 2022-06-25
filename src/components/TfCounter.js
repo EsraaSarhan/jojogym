@@ -32,7 +32,7 @@ const TfCounter = ({ nonst }) => {
        // console.log(result.non_field_errors[0]);
        // this.setState({ datastore: items })        
        if(result.key){
-        
+          //window.location.href = '/customers';
        // setState({redirect:true})
 
        }
