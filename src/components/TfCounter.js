@@ -34,12 +34,12 @@ const TfCounter = ({ nonst }) => {
        // console.log(result.non_field_errors[0]);
        // this.setState({ datastore: items })        
        if(result.key){
-          //window.location.href = '/customers';
-       // setState({redirect:true})
+       // localStorage.setItem('token', result.key)
+       localStorage.setItem('token', result.key)
 
- //const cookies = new Cookies();
-// cookies.set('myCat', 'Pacman', { path: '/' });
-console.log(Cookies.get('tabstyle'), Cookies.get('csrftoken'), Cookies.get()); // Pacman
+        window.location.href = '/customers';
+        
+   
 
        }
       },

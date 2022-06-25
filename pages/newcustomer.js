@@ -16,8 +16,13 @@ const RangeSlider = dynamic(() => import("../src/components/RangeSlider"), {
 
 const NewCustomer = () => {
   let sort = 6;
+  let token = '';
   const [active, setActive] = useState(1);
   const [state, setstate] = useState([]);
+  useEffect(() => {
+    token = localStorage.getItem('token');
+    console.log(token)
+  }, [active]);
 
   const { form, use } = useForm({
     defaultValues: { first_name: "", last_name: "", mobile_number: "", age: "" },
@@ -27,6 +32,7 @@ const NewCustomer = () => {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': 'Token ' + token
       },
       body: JSON.stringify(values, undefined, 2)
     })
@@ -39,6 +45,7 @@ const NewCustomer = () => {
        if(result.key){
         
         setState({redirect:true})
+        window.location.href = '/customers';
 
        }
       },
@@ -104,7 +111,7 @@ const NewCustomer = () => {
                   </div>
                   <div className="row-form st-1">
                     <input
-                      type="text"
+                      type="number"
                       placeholder="رقم الجوال ..."
                       id="mobile_number"
                       name="mobile_number"
@@ -118,8 +125,9 @@ const NewCustomer = () => {
                       placeholder=" العمر..."
                       id="age"
                       name="age">
-                      <option>1-7</option>
+                      <option>4-7</option>
                       <option>7-10</option>
+                      <option>10-12</option>
                     </select>
                     <svg
                       className="icon"

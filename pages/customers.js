@@ -9,23 +9,50 @@ import useFetchData from '../src/components/customHooks/useFetchData'
 
 
 const Customers = () => {
-  const token = '55f376af8a137b773f72cccd5a184bdd4fec3f61'; 
+  const token = '';
   const { data } = useFetchData('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/?page=1&page_size=10');
   console.log(data);
   let sort = 6;
   const [active, setActive] = useState(1);
   const [state, setstate] = useState([]);
   useEffect(() => {
+    token = localStorage.getItem('token');
     pagination(".single-product__", sort, active);
     let list = document.querySelectorAll(".single-product__");
     setstate(getPagination(list.length, sort));
   }, [active]);
+
+  function deleteUser(id) {
+    console.log(id, token)
+   
+       
+    fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/' + id, {
+      method: 'DELETE',
+      headers:{
+        'Authorization': 'Token ' + token
+      }
+     
+    })
+    .then(res => res.json())
+    .then(
+      (result) => {
+        console.log(result);
+       
+      },
+      (error) => {
+        console.log(error)
+
+       
+      }
+    )
+  }
+
   return (
     <Layout bodyClass={"classes"}>
       <PageBanner pageName={"العميلات"} />
 
       <section className="tf-section tf-program-details">
-      <img src="assets/images/pattern/program_details1.png" alt="" className="bg1" />
+        <img src="assets/images/pattern/program_details1.png" alt="" className="bg1" />
         <img src="assets/images/pattern/program_details2.png" alt="" className="bg2" />
         <div className="container">
           <div className="row">
@@ -53,30 +80,27 @@ const Customers = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>
-                      <button className="btn btn-action"><i className="fas fa-edit"></i></button>
-                      <button className="btn btn-action"><i className="fas fa-trash"></i></button> 
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>@fat</td>
-                  </tr>
-                 
+
+                  {data && (
+                    data.map((user, index) => (
+                      <tr>
+                        <th scope="row">{index}</th>
+                        <td>{user.first_name}</td>
+                        <td>{user.last_name}</td>
+                        <td>{user.mobile_number}</td>
+                        <td>{user.subscriptions}</td>
+                        <td>{user.age}</td>
+                        <td>{user.customer_created_a}</td>
+                        <td>
+                          <button className="btn btn-action"><i className="fas fa-edit"></i></button>
+                          <button className="btn btn-action" onClick={deleteUser}><i className="fas fa-trash"></i></button>
+                        </td>
+                      </tr>
+
+                    ))
+                  )}
+
+
                 </tbody>
 
               </table>

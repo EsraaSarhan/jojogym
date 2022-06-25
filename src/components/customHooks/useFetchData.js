@@ -3,28 +3,40 @@ import Cookies from 'universal-cookie';
 
 function useFetchData( url) {
     const [data, setPosts] = useState([]);
-    const cookies = new Cookies();
+    
 
-    console.log(cookies)
+   
+  //  localStorage.getItem(token)
 
-
-    useEffect(() => {
+    //const token = localStorage.getItem('token');
+    //if(token){
+      //console.log(token)
+      useEffect(() => {
+        let token = localStorage.getItem('token')
         fetch(url, 
-          
           {
-            method: "GET",
-            credentials: 'include',
-            headers:  new Headers({ Accept: 'application/json' })
+            headers:{
+              'Authorization': 'Token ' + token
+            }
           })
-          .then((res) => console.log(res))
+          .then((res) => res.json())
           .then((result) => {
-            setPosts(result);
+            console.log(result, "ddsa")
+            setPosts(result.results);
           }).catch((err) => {
             console.log(err);
         });
       }, []);
 
+    
+    // }
+    // else{
+    // data = 'not authorized'
+    //  setPosts('not authorized')
+    // }
+
     return { data };
+    
 }
 
 

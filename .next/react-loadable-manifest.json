@@ -1,1 +1,8 @@
-{}
+{
+  "newcustomer.js -> ../src/components/RangeSlider": {
+    "id": "newcustomer.js -> ../src/components/RangeSlider",
+    "files": [
+      "static/chunks/src_components_RangeSlider_js.js"
+    ]
+  }
+}
