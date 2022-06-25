@@ -93,7 +93,7 @@ const Customers = () => {
                         <td>{user.customer_created_a}</td>
                         <td>
                           <button className="btn btn-action"><i className="fas fa-edit"></i></button>
-                          <button className="btn btn-action" onClick={deleteUser}><i className="fas fa-trash"></i></button>
+                          <button className="btn btn-action" ><i className="fas fa-trash"></i></button>
                         </td>
                       </tr>
 
