@@ -114,7 +114,7 @@ const NewCustomer = () => {
                   </div>
                   <div className="row-form st-1">
                     <input
-                      type="number"
+                      type="text"
                       placeholder="رقم الجوال ..."
                       id="mobile_number"
                       name="mobile_number"
