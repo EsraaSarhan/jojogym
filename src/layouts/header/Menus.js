@@ -4,16 +4,16 @@ import { Fragment } from "react";
 export const Home = () => (
   <Fragment>
     <li>
-      <Link href="/">Home 01</Link>
+      <Link href="/newcustomer">نسجيل عميلة جديدة</Link>
     </li>
     <li>
-      <Link href="/home2">Home 02</Link>
+      <Link href="/customers">قائمة العميلات</Link>
     </li>
   </Fragment>
 );
 export const Pages = () => (
   <Fragment>
-    <li>
+    {/* <li>
       <Link href="/calendar">Academic Calendar</Link>
     </li>
     <li>
@@ -30,32 +30,32 @@ export const Pages = () => (
     </li>
     <li>
       <Link href="/faq">Faq</Link>
-    </li>
+    </li> */}
   </Fragment>
 );
 export const Teacher = () => (
   <Fragment>
-    <li>
+    {/* <li>
       <Link href="/teacher">Teacher</Link>
     </li>
     <li>
       <Link href="/teacher-details">Teachers Details</Link>
-    </li>
+    </li> */}
   </Fragment>
 );
 export const Customers = () => (
   <Fragment>
-    <li>
+    {/* <li>
       <Link href="/custmers">Customers</Link>
     </li>
     <li>
       <Link href="/classe-details">Classes Details</Link>
-    </li>
+    </li> */}
   </Fragment>
 );
 export const Event = () => (
   <Fragment>
-    <li>
+    {/* <li>
       <Link href="/events">Event</Link>
     </li>
     <li>
@@ -63,22 +63,22 @@ export const Event = () => (
     </li>
     <li>
       <Link href="/event-details">Events Details</Link>
-    </li>
+    </li> */}
   </Fragment>
 );
 export const Program = () => (
   <Fragment>
-    <li>
+    {/* <li>
       <Link href="/program">Program</Link>
     </li>
     <li>
       <Link href="/program-details">program details</Link>
-    </li>
+    </li> */}
   </Fragment>
 );
 export const Blog = () => (
   <Fragment>
-    <li>
+    {/* <li>
       <Link href="/blog-grid">blog grid</Link>
     </li>
     <li>
@@ -86,17 +86,17 @@ export const Blog = () => (
     </li>
     <li>
       <Link href="/blog-single">blog single</Link>
-    </li>
+    </li> */}
   </Fragment>
 );
 export const NewCustomer = () => (
   <Fragment>
-    <li>
+    {/* <li>
       <Link href="/newcustomer">NewCustomer</Link>
     </li>
     <li>
       <Link href="/shop-details">Shop Details</Link>
-    </li>
+    </li> */}
   </Fragment>
 );
 export const About = () => <Link href="/about">About</Link>;
