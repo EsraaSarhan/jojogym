@@ -27,7 +27,7 @@ const PageBanner2 = ({ pageName, pageTitle }) => {
                 <ul className="jus-ct">
                   <li>
                     <Link href="/">
-                      <a className="f-rubik">Home</a>
+                      <a className="f-rubik">الرئيسية</a>
                     </Link>
                   </li>
                   <li>

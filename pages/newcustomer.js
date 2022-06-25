@@ -16,17 +16,20 @@ const RangeSlider = dynamic(() => import("../src/components/RangeSlider"), {
 
 const NewCustomer = () => {
   let sort = 6;
-  let token = '';
+  //const token = '';
+  const [token, setToken] = useState([]);
   const [active, setActive] = useState(1);
   const [state, setstate] = useState([]);
   useEffect(() => {
-    token = localStorage.getItem('token');
-    console.log(token)
+  //  token = localStorage.getItem('token');
+    setToken(localStorage.getItem('token'))
   }, [active]);
-
+  console.log(token)
   const { form, use } = useForm({
+    
     defaultValues: { first_name: "", last_name: "", mobile_number: "", age: "" },
     onSubmit: (values) => 
+    
     fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/', {
       method: 'POST',
       headers: {
