@@ -1,10 +1,14 @@
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+
+
+
 
 export const Home = () => (
   <Fragment>
     <li>
       <Link href="/newcustomer">نسجيل عميلة جديدة</Link>
+      
     </li>
     <li>
       <Link href="/customers">قائمة العميلات</Link>
@@ -68,12 +72,12 @@ export const Event = () => (
 );
 export const Program = () => (
   <Fragment>
-    {/* <li>
-      <Link href="/program">Program</Link>
+    <li>
+      <Link href="/newservice">اضافة خدمة جديدة</Link>
     </li>
     <li>
-      <Link href="/program-details">program details</Link>
-    </li> */}
+      <Link href="/services">قائمة الخدمات</Link>
+    </li>
   </Fragment>
 );
 export const Blog = () => (
@@ -99,5 +103,6 @@ export const NewCustomer = () => (
     </li> */}
   </Fragment>
 );
+
 export const About = () => <Link href="/about">About</Link>;
 export const Contact = () => <Link href="/contact">CONTACTS</Link>;

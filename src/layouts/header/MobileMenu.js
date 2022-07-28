@@ -11,6 +11,7 @@ import {
   Program,
   NewCustomer,
   Teacher,
+  NewService
 } from "./Menus";
 
 const MobileMenu = () => {

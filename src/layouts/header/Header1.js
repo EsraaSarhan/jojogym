@@ -16,7 +16,25 @@ import {
 
 const Header1 = () => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
+  const [isLoggedIn, setisLoggedIn] = useState(null);
+  const logIn = () => {
+    setisLoggedIn(true);
+    };
+    const logOut = () => {
+    setisLoggedIn(false);
+    };
+
   useEffect(() => {
+    if(localStorage.getItem('token')){
+      setisLoggedIn(true);
+      document.loggedUserName = localStorage.getItem('loggedUserName');
+      document.userToken = localStorage.getItem('token');
+    }
+    else{
+      setisLoggedIn(false);
+      localStorage.clear();
+    }
+
     document.querySelector("body").className =
       "counter-scroll header-fixed main";
   }, []);
@@ -29,7 +47,7 @@ const Header1 = () => {
               <div id="site-logo" className="clearfix">
                 <Link href="/">
                   <a className="logo st-2">
-                    <img src="assets/images/logo/jojo-logo.png" alt="Kinco" />
+                    <img src="assets/images/logo/jojo-logo.png" alt="jojo gym" />
                   </a>
                 </Link>
               </div>
@@ -124,8 +142,10 @@ const Header1 = () => {
                 <span />
               </div>
               <div className="nav-wrap">
+             
               <nav id="mainnav" className="mainnav st-2">
-                    <ul className="menu">
+                  {isLoggedIn ? (
+                    <><button onClick={logOut}>Logout</button><ul className="menu">
                       <li className="menu-item-has-children">
                         <a href="#">العملاء</a>
                         <ul className="sub-menu">
@@ -135,33 +155,33 @@ const Header1 = () => {
                       <li className="menu-item-has-children">
                         <a>الفواتير</a>
                         {/* <ul className="sub-menu">
-                          <li className="inner-menu-item">
-                            <a href="#">Teachers</a>
-                            <ul className="sub-menu">
-                              <Teacher />
-                            </ul>
-                          </li>
-                          <li className="inner-menu-item ">
-                            <a href="#">Classes</a>
-                            <ul className="sub-menu">
-                              <li>
-                                <Link href="classes">Classes</Link>
-                              </li>
-                              <li>
-                                <Link href="classe-details">
-                                  Classes Details
-                                </Link>
-                              </li>
-                            </ul>
-                          </li>
-                          <li className="inner-menu-item">
-                            <a href="#">Events</a>
-                            <ul className="sub-menu">
-                              <Event />
-                            </ul>
-                          </li>
-                          <Pages />
-                        </ul> */}
+      <li className="inner-menu-item">
+        <a href="#">Teachers</a>
+        <ul className="sub-menu">
+          <Teacher />
+        </ul>
+      </li>
+      <li className="inner-menu-item ">
+        <a href="#">Classes</a>
+        <ul className="sub-menu">
+          <li>
+            <Link href="classes">Classes</Link>
+          </li>
+          <li>
+            <Link href="classe-details">
+              Classes Details
+            </Link>
+          </li>
+        </ul>
+      </li>
+      <li className="inner-menu-item">
+        <a href="#">Events</a>
+        <ul className="sub-menu">
+          <Event />
+        </ul>
+      </li>
+      <Pages />
+    </ul> */}
                       </li>
                       <li className="menu-item-has-children">
                         <a>الخدمات</a>
@@ -172,14 +192,14 @@ const Header1 = () => {
                       <li className="menu-item-has-children">
                         <a>الحفلات</a>
                         {/* <ul className="sub-menu">
-                          <Blog />
-                        </ul> */}
+      <Blog />
+    </ul> */}
                       </li>
                       <li className="menu-item-has-children">
                         <a>المبيعات</a>
                         {/* <ul className="sub-menu">
-                          <Shop />
-                        </ul> */}
+      <Shop />
+    </ul> */}
                       </li>
                       <li className="menu-item-has-children">
                         <a>الموظفات</a>
@@ -190,23 +210,27 @@ const Header1 = () => {
                       <li className="menu-item-has-children">
                         <a>المصروفات</a>
                         {/* <ul className="sub-menu">
-                          <Shop />
-                        </ul> */}
+      <Shop />
+    </ul> */}
                       </li>
                       <li className="menu-item-has-children">
                         <a>التقارير</a>
                         {/* <ul className="sub-menu">
-                          <Shop />
-                        </ul> */}
+      <Shop />
+    </ul> */}
                       </li>
                       <li className="menu-item-has-children">
                         <a>المستخدمين</a>
                         {/* <ul className="sub-menu">
-                          <Shop />
-                        </ul> */}
+      <Shop />
+    </ul> */}
                       </li>
-                     
-                    </ul>
+
+                    </ul></>
+                  ) : (
+                    <button onClick={logIn}>Login</button>
+                  )}
+                   
                     {/* /.menu */}
                   </nav>
               </div>

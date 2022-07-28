@@ -548,7 +548,7 @@
     .tf-section {
         padding: 70px 0 !important;
     }
-    .tf-section.tf-courses {
+    .tf-section.tf-servicesList {
         padding: 130px 0 !important;
     }
     .tf-subcribe {
@@ -751,17 +751,17 @@
     .tf-section.tf-service-2 {
         padding: 260px 0 70px !important;
     }
-    .tf-section.tf-feedback {
+    .tf-section.tf-service {
         padding-bottom: 120px !important;
     }
     .teacher .tf-section.tf-teacher-details,
     .teacher .tf-section.tf-counter2 {
         padding-bottom: 100px !important;
     }
-    .program-details .tf-section.tf-courses {
+    .program-details .tf-section.tf-servicesList {
         padding: 70px 0 130px!important;
     }
-    .classes-details .tf-section.tf-courses {
+    .classes-details .tf-section.tf-servicesList {
         padding: 70px 0 210px!important;
     }
     .testimonial .tf-quote {
@@ -827,7 +827,7 @@
         right: 10px;
     }
 
-    .classes-details .tf-section.tf-courses {
+    .classes-details .tf-section.tf-servicesList {
         padding: 70px 0 100px!important;
     }
 
@@ -1021,7 +1021,7 @@
     .wrap-couter .progress-couter {
         width: calc(100% - 30px);
     }
-    .classes .tf-section.tf-courses {
+    .classes .tf-section.tf-servicesList {
         margin-top: -85px;
     }
 

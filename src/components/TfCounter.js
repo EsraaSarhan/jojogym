@@ -7,8 +7,8 @@ import Cookies from 'js-cookie';
 
 
 const TfCounter = ({ nonst }) => {
- // const { formErrors, isLoaded, loginErrors } = this.state;
- //const navigate = useNavigate();
+//  const { formErrors, isLoaded, loginErrors } = this.state;
+//  const navigate = useNavigate();
 //  const state = {
 //   redirect: false
 // }
@@ -31,15 +31,12 @@ const TfCounter = ({ nonst }) => {
     .then(
       (result) => {
         console.log(result);
-       // console.log(result.non_field_errors[0]);
        // this.setState({ datastore: items })        
        if(result.key){
        // localStorage.setItem('token', result.key)
-       localStorage.setItem('token', result.key)
-
+        localStorage.setItem('token', result.key);
+        localStorage.setItem('loggedUserName', values.username);
         window.location.href = '/customers';
-        
-   
 
        }
       },

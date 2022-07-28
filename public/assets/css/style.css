@@ -596,7 +596,8 @@ input[type="email"],
 input[type="url"],
 input[type="search"],
 input[type="tel"],
-input[type="color"] {
+input[type="color"] ,
+.st-1 .dropdown-toggle{
     font-family: 'Salsa', sans-serif;
     border: 1px solid #e8ebf0;
     outline           : 0;
@@ -1204,6 +1205,7 @@ a:focus {
     -ms-transform: translateY(-50%);
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
+    width: 65%;
 }
 
 .inner-contact ul {
@@ -1221,9 +1223,25 @@ a:focus {
 
 .header-contact {
     align-items: center;
-    margin-right: 120px;
+    margin-right: 0;
 }
 
+.btn.btn-primary{
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-toggle::after{
+    display: none;
+}
+.fa-user-circle{
+    font-size: 46px;
+}
+.dropdown-item{
+    font-size: 18px;
+}
 .inner-contact {
     margin-right: 40px;
 }
@@ -1736,12 +1754,14 @@ a:focus {
 }
 
 .inner-page .is-fixed #mainnav .menu > li.menu-item-has-children > a::after,
-.inner-page .is-fixed #mainnav .menu li > a {
+.inner-page .is-fixed #mainnav .menu li > a,
+.inner-page .is-fixed #mainnav .dropdown button {
     color: var(--primary-color2);
 }
 
 .inner-page .is-fixed #mainnav .menu > li.menu-item-has-children > a:hover::after,
-.inner-page .is-fixed #mainnav .menu li > a:hover {
+.inner-page .is-fixed #mainnav .menu li > a:hover,
+.inner-page .is-fixed #mainnav .dropdown button:hover {
     color: var(--primary-color3);
 }
 .inner-page .is-fixed #mainnav .menu > li > .sub-menu {

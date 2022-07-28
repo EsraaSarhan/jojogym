@@ -572,6 +572,7 @@
 
 .inner-page .tf-page-title {
   overflow: hidden;
+  background-color: #fcf9f4;
 }
 
 .tf-page-title .overlay-bg {
@@ -2884,24 +2885,24 @@
   line-height: 33px;
 }
 
-/* tf-courses */
-.main .tf-section.tf-courses {
+/* tf-servicesList */
+.main .tf-section.tf-servicesList {
   padding: 130px 0 158px;
 }
 .main .tf-section.tf-counter {
   padding: 105px 0 85px 0;
 }
-.tf-section.tf-courses {
+.tf-section.tf-servicesList {
   padding: 130px 0 160px;
 }
 
-.tf-courses {
+.tf-servicesList {
   background-image: url(../images/background/bg-courses.png);
   background-repeat: no-repeat;
-  background-position: center center;
   position: relative;
   z-index: 99;
   background-size: cover;
+  background-color: #fcf9f4;
 }
 
 .item-courses .box-feature img {
@@ -3132,17 +3133,22 @@
   display: block;
 }
 
-/* tf-feedback */
-.main .tf-feedback {
+/* tf-newservice */
+.main .tf-newservice {
   padding: 128px 0 132px;
 }
-.tf-feedback {
+.tf-newservice {
   background-image: url(../images/background/bg-fb.png);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
 }
-
+.tf-newservice select + svg{
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
 .item-fb {
   background-image: url(../images/background/bg-slider-fb.png);
   background-repeat: no-repeat;
@@ -3265,11 +3271,17 @@
 .fl-register input[type="number"],
 .fl-register input[type="number"]::placeholder,
 .fl-register select,
-.fl-register select::placeholder {
+.fl-register select::placeholder,
+.fl-register .dropdown-toggle {
   font-size: 24px;
   margin-bottom: 0;
   border: none;
   padding: 26px 17px;
+}
+
+.fl-register .dropdown-toggle{
+height: 81px;
+border: none;
 }
 
 /* About
@@ -3300,7 +3312,7 @@
   padding: 48px 30px 30px;
 }
 
-.about .tf-section.tf-courses {
+.about .tf-section.tf-servicesList {
   background-image: url(../images/background/bg-courses2.png);
   background-repeat: no-repeat;
   background-position: center center;
@@ -3320,7 +3332,7 @@
   padding: 130px 0 130px;
 }
 
-.about .tf-section.tf-courses {
+.about .tf-section.tf-servicesList {
   padding: 125px 0 176px;
 }
 
@@ -3337,7 +3349,7 @@
   margin-bottom: 45px;
 }
 
-.about .tf-feedback .title-heading.st-3 {
+.about .tf-newservice .title-heading.st-3 {
   margin-bottom: 58px;
 }
 
@@ -3443,11 +3455,11 @@
   transition-delay: 0.15s;
 }
 
-.inner-page .tf-feedback {
+.inner-page .tf-newservice {
   background: url(../images/background/bg-fb2.png) center center no-repeat;
   background-size: cover;
-  padding: 220px 0 150px;
-  margin-bottom: -35px;
+  padding:111px 0 520px 0;
+  margin-top: -35px;
 }
 
 .inner-page .footer-inner {
@@ -3831,7 +3843,7 @@
   margin-bottom: -80px;
 }
 
-.pricing .tf-section.tf-courses {
+.pricing .tf-section.tf-servicesList {
   padding: 207px 0 177px;
   background-size: cover;
   background-image: url(../images/background/bg-courses3.png);
@@ -4491,7 +4503,7 @@
   margin-bottom: 30px;
 }
 
-.program-details .tf-section.tf-courses {
+.program-details .tf-section.tf-servicesList {
   padding: 125px 0 170px;
   background-size: cover;
   background-image: url(../images/background/bg-program-details.png);
@@ -4504,9 +4516,9 @@
 
 /* classes
 -------------------------------------------------------------- */
-.classes .tf-section.tf-courses {
+.classes .tf-section.tf-servicesList {
   background-size: cover;
-  background-image: url(../images/background/bg_classes.png);
+  background-image: url(../images/background/bg-courses.png);
   background-repeat: no-repeat;
   background-position: center center;
   padding: 135px;
@@ -4766,7 +4778,7 @@
   margin-top: 15px;
 }
 
-.classes-details .tf-section.tf-courses {
+.classes-details .tf-section.tf-servicesList {
   background-size: cover;
   background-image: url(../images/background/bg-courses4.png);
   background-repeat: no-repeat;
@@ -6757,4 +6769,11 @@
 
 .slider-2 .swiper .owl-stage-outer {
   overflow: visible;
+}
+
+.modal{
+  z-index: 10000;
+}
+.modal-title, .modal-header .close{
+  font-size: 26px;
 }

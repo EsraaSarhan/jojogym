@@ -21,7 +21,6 @@ function useFetchData( url) {
           })
           .then((res) => res.json())
           .then((result) => {
-            console.log(result, "ddsa")
             setPosts(result.results);
           }).catch((err) => {
             console.log(err);

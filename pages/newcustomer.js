@@ -3,6 +3,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import PageBanner2 from "../src/components/PageBanner2";
 import { useForm } from "react-cool-form";
+import useFetchData from '../src/components/customHooks/useFetchData'
+
+import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
+
 import {
   LeftArrow,
   LeftArrowWhite,
@@ -15,11 +19,16 @@ const RangeSlider = dynamic(() => import("../src/components/RangeSlider"), {
 });
 
 const NewCustomer = () => {
+  
   let sort = 6;
   //const token = '';
   const [token, setToken] = useState([]);
   const [active, setActive] = useState(1);
   const [state, setstate] = useState([]);
+
+  const { data } = useFetchData('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/');
+  console.log(data);
+
   useEffect(() => {
   //  token = localStorage.getItem('token');
     setToken(localStorage.getItem('token'))
@@ -112,7 +121,7 @@ const NewCustomer = () => {
                     />
                   
                   </div>
-                  <div className="row-form st-1">
+                  <div className="row-form st-1 mg-bt-20">
                     <input
                       type="text"
                       placeholder="رقم الجوال ..."
@@ -122,15 +131,20 @@ const NewCustomer = () => {
                     
                   </div>
 
-                  <div className="row-form st-1">
+                  <div className="row-form st-1 mg-bt-20">
                   
                     <select
                       placeholder=" العمر..."
                       id="age"
-                      name="age">
-                      <option>4-7</option>
-                      <option>7-10</option>
-                      <option>10-12</option>
+                      name="age">      
+          <option value="">العمر...</option>
+      <option value="4-7">من 4 الى 7 سنوات</option>
+  
+      <option value="7-10">من 7 الى 10 سنوات</option>
+    
+      <option value="10-12">من 10 الى 12 سنوات</option>
+      <option value=">12">اكبر من 12 سنة</option>
+    
                     </select>
                     <svg
                       className="icon"
@@ -150,6 +164,21 @@ const NewCustomer = () => {
                     </svg>
                   </div>
 
+
+                  {data ? (
+                    <>
+                     <div className="row-form st-1 mg-bt-20">
+                  <DropdownMultiselect
+                    options={data}
+                    name="countries"
+                  />
+                  </div>
+                      </>
+                  ) : (
+                    <ul></ul>
+                  )}
+                 
+
                   <div className="row-form ml-auto mt-5 mr-auto">
                     <button className="fl-btn st-14">
                       <span className="inner">حفظ بيانات العميلة</span>
@@ -161,6 +190,8 @@ const NewCustomer = () => {
           </div>
         </div>
       </section>
+
+    
     </Layout>
   );
 };

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Dropdown from 'react-bootstrap/Dropdown';
 import HeaderSearchForm from "../../components/HeaderSearchForm";
 // import Sidebar from "../../components/Sidebar";
 import {
@@ -12,10 +13,55 @@ import {
   Program,
   NewCustomer,
   Teacher,
+  NewService
 } from "./Menus";
+import useFetchData from '../../components/customHooks/useFetchData'
+
 
 const Header2 = () => {
+  const [isLoggedIn, setisLoggedIn] = useState(null);
+ 
+  const logIn = () => {
+    setisLoggedIn(true);
+    };
+    
+    const logOut = () => {
+
+    fetch("https://gym-mgmt-system-development.herokuapp.com/api/v1/auth/logout/", {
+  "method": "POST",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json"
+  }
+})
+.then(response => response.json())
+.then(response => {
+  if(response.detail === 'Successfully logged out.'){
+    localStorage.clear();
+    setisLoggedIn(false);
+    window.location.href = '/';
+  }
+  console.log(response);
+  
+  // document.loggedUserName = null;
+  //     document.userToken =null;
+})
+.catch(err => {
+  console.log(err);
+});
+    };
   useEffect(() => {
+    if(localStorage.getItem('token')){
+      setisLoggedIn(true);
+      document.loggedUserName = localStorage.getItem('loggedUserName');
+      document.userToken = localStorage.getItem('token');
+    }
+    else{
+      localStorage.clear();
+      setisLoggedIn(false);
+    }
+   
+
     document.querySelector("body").className =
       "counter-scroll header-fixed inner-page";
   }, []);
@@ -47,89 +93,50 @@ const Header2 = () => {
                   <span />
                 </div>
                 <div className="nav-wrap">
-                  <nav id="mainnav" className="mainnav st-2">
-                    <ul className="menu">
+                <nav id="mainnav" className="mainnav st-2 d-flex align-items-center justify-content-between" >
+                  {isLoggedIn ? (
+                    <><ul className="menu">
                       <li className="menu-item-has-children">
                         <a href="#">العملاء</a>
                         <ul className="sub-menu">
                           <Home />
                         </ul>
                       </li>
-                      <li className="menu-item-has-children">
-                        <a>الفواتير</a>
-                        {/* <ul className="sub-menu">
-                          <li className="inner-menu-item">
-                            <a href="#">Teachers</a>
-                            <ul className="sub-menu">
-                              <Teacher />
-                            </ul>
-                          </li>
-                          <li className="inner-menu-item ">
-                            <a href="#">Classes</a>
-                            <ul className="sub-menu">
-                              <li>
-                                <Link href="classes">Classes</Link>
-                              </li>
-                              <li>
-                                <Link href="classe-details">
-                                  Classes Details
-                                </Link>
-                              </li>
-                            </ul>
-                          </li>
-                          <li className="inner-menu-item">
-                            <a href="#">Events</a>
-                            <ul className="sub-menu">
-                              <Event />
-                            </ul>
-                          </li>
-                          <Pages />
-                        </ul> */}
-                      </li>
+                    
                       <li className="menu-item-has-children">
                         <a>الخدمات</a>
                         <ul className="sub-menu">
                           <Program />
                         </ul>
                       </li>
-                      <li className="menu-item-has-children">
-                        <a>الحفلات</a>
-                        {/* <ul className="sub-menu">
-                          <Blog />
-                        </ul> */}
-                      </li>
-                      <li className="menu-item-has-children">
-                        <a>المبيعات</a>
-                        {/* <ul className="sub-menu">
-                          <Shop />
-                        </ul> */}
-                      </li>
-                      <li className="menu-item-has-children">
-                        <a>الموظفات</a>
-                        <ul className="sub-menu">
-                          <NewCustomer />
-                        </ul>
-                      </li>
-                      <li className="menu-item-has-children">
-                        <a>المصروفات</a>
-                        {/* <ul className="sub-menu">
-                          <Shop />
-                        </ul> */}
-                      </li>
-                      <li className="menu-item-has-children">
-                        <a>التقارير</a>
-                        {/* <ul className="sub-menu">
-                          <Shop />
-                        </ul> */}
-                      </li>
-                      <li className="menu-item-has-children">
-                        <a>المستخدمين</a>
-                        {/* <ul className="sub-menu">
-                          <Shop />
-                        </ul> */}
-                      </li>
                      
+                      
+
                     </ul>
+                        {/* <div className="dropdown">
+                          <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i className="fa-solid fa-circle-user"></i>
+                          </button>
+                          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a className="dropdown-item" href="#" onClick={logOut}>تسجيل الخروج</a></li>
+                          </ul>
+                        </div>
+                         */}
+                         <Dropdown>
+      <Dropdown.Toggle id="dropdown-basic">
+      <i className="fa fa-user-circle"></i>
+
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item  onClick={logOut}>تسجيل الخروج</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+                    </>
+                  ) : (
+                    <ul></ul>
+                  )}
+                   
                     {/* /.menu */}
                   </nav>
                 </div>
