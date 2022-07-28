@@ -789,6 +789,17 @@ h6 {
 .align-fl-end {
     align-items: flex-end;
 }
+
+.toast{
+        top: 135px;
+        left: 0;
+        padding: 0;
+        position: absolute;
+        z-index: 1000;
+        box-sizing: content-box;
+        width: 500px;
+        border-radius: 25px;
+}
 .flex-wrap {
     flex-wrap: wrap;
 }
@@ -2471,13 +2482,17 @@ a:focus {
 }
 .table thead th:last-of-type, .table tbody tr td:last-of-type{
     border-right: 0;
-    width: 10%;
+    width: 15%;
 }
 .table thead th:nth-child(7), .table tbody tr td:nth-child(7){
     border-left: 0;
 }
 .table thead th, .table tbody td{
     text-align: center;
+}
+.table .fa-plus-circle{
+    font-size: 14px;
+    margin-left: -5px;
 }
 .btn.btn-action{
     font-size: 18px;
@@ -2489,4 +2504,16 @@ a:focus {
 
 .fa-trash{
     color: red;
+}
+
+
+.inner-page{
+    background-color: #fcf9f4;
+}
+
+.modal-backdrop.show{
+    z-index: 9999;
+}
+.toast.show{
+    z-index: 10000;
 }

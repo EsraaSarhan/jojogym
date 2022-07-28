@@ -7,7 +7,7 @@ import { Fragment, useState } from "react";
 export const Home = () => (
   <Fragment>
     <li>
-      <Link href="/newcustomer">نسجيل عميلة جديدة</Link>
+      <Link href="/newcustomer">تسجيل عميلة جديدة</Link>
       
     </li>
     <li>

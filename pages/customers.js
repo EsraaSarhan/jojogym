@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, React, useRef } from "react";
 import PageBanner from "../src/components/PageBanner";
 import { LeftArrow, RightArrow } from "../src/Icons";
 import Layout from "../src/layouts/Layout";
@@ -26,6 +26,7 @@ const Customers = () => {
   const [token, setToken] = useState([]);
   const [selectedUser, setSelectedUser] = useState([]);
   const [isUserExist, setisUserExist] = useState(false);
+  const nodeRef = useRef(null);
 
   //isUserExist
 
@@ -36,10 +37,6 @@ const Customers = () => {
     pagination(".single-product__", sort, active);
     let list = document.querySelectorAll(".single-product__");
     setstate(getPagination(list.length, sort));
-
-
-
-
   }, [active]);
 
 
@@ -53,63 +50,11 @@ const Customers = () => {
 
   //https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/
 
-  const handleShow = (userId) => {
-
-    fetch("https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/" + userId + "/", {
-      "method": "GET",
-      "headers": {
-        "content-type": "application/json",
-        "accept": "application/json",
-        'Authorization': 'Token ' + token
-      }
-    })
-      .then(response => response.json())
-      .then(response => {
-
-        console.log(response, "edit");
-        if (response.id) {
-          setSelectedUser(response);
-          setisUserExist(true)
-        }
-
-
-        setShow(true);
-
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
-  const deleteUser = (userId) => {
-    fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/' + userId + '/', {
-      method: 'DELETE',
-      headers:{
-        'Authorization': 'Token ' + token
-      }
-
-    })
-    .then(res => res.json())
-    .then(
-      (result) => {
-        setShowToast(true);
-        data = useFetchData('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/?page=1&page_size=10');
-      },
-      (error) => {
-        console.log(error)
-
-
-      }
-    )
-  };
-
-
   const { form, use } = useForm({
-
-    defaultValues: { first_name: "", last_name: "", mobile_number: "", age: "" },
+    defaultValues: { first_name: selectedUser.first_name, last_name: selectedUser.last_name, mobile_number: selectedUser.mobile_number, age: selectedUser.age },
     onSubmit: (values) =>
 
-      fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/', {
+      fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/' + selectedUser.id + '/', {
         method: 'Put',
         headers: {
           'Accept': 'application/json',
@@ -139,11 +84,73 @@ const Customers = () => {
         )
   });
 
+  const handleShow = (userId) => {
+
+    fetch("https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/" + userId + "/", {
+      "method": "GET",
+      "headers": {
+        "content-type": "application/json",
+        "accept": "application/json",
+        'Authorization': 'Token ' + token
+      }
+    })
+      .then(response => response.json())
+      .then(res => {
+
+        console.log(res, "edit");
+        if (res.id) {
+          setSelectedUser(res);
+          setisUserExist(true)
+        }
+
+
+        setShow(true);
+
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const deleteUser = (userId) => {
+    fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/' + userId + '/', {
+      method: 'DELETE',
+      headers:{
+        'Authorization': 'Token ' + token
+      }
+
+    })
+    .then(res => console.log(res))
+    .then(
+      (result) => {
+        setShowToast(true);
+        setInterval(() => {
+          window.location = "./customers"
+        }, 1000);
+        //data = useFetchData('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/?page=1&page_size=10');
+      },
+      (error) => {
+        console.log(error)
+
+
+      }
+    )
+  };
+
+
+
+
 
   return (
     <Layout bodyClass={"classes"}>
+      
       <PageBanner pageName={"العميلات"} />
-
+        
+      <Toast onClose={() => setShowToast(false)} show={showToast} delay={5000} bg="success" autohide className="bg-success toast-container top-0 start-0 p-3">
+          <Toast.Body className="Dark text-white">
+            <h6  ref={nodeRef}>تم حذف العميلة بنجاح</h6>
+          </Toast.Body>
+        </Toast>
       <section className="tf-section tf-program-details">
         <img src="assets/images/pattern/program_details1.png" alt="" className="bg1" />
         <img src="assets/images/pattern/program_details2.png" alt="" className="bg2" />
@@ -236,7 +243,7 @@ user.services.map((service) => {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>تعديل العميلة</Modal.Title>
+          <Modal.Title>تعديل بيانات العميلة</Modal.Title>
         </Modal.Header>
         <Modal.Body>
 
@@ -253,7 +260,7 @@ user.services.map((service) => {
                     type="text"
                     id="first_name"
                     name="first_name"
-                    value={selectedUser.first_name}
+                    defaultValue={selectedUser.first_name}
                     placeholder="الأسم الأول ......"
                   />
                 </div>
@@ -261,7 +268,7 @@ user.services.map((service) => {
                   <input
                     type="text"
                     placeholder="الأسم الأخير ......"
-                    value={selectedUser.last_name}
+                    defaultValue={selectedUser.last_name}
                     id="last_name"
                     name="last_name"
                   />
@@ -272,7 +279,7 @@ user.services.map((service) => {
                     type="text"
                     placeholder="رقم الجوال ..."
                     id="mobile_number"
-                    value={selectedUser.mobile_number}
+                    defaultValue={selectedUser.mobile_number}
                     name="mobile_number"
                   />
 
@@ -280,15 +287,19 @@ user.services.map((service) => {
 
                 <div className="row-form st-1">
 
-                  <select
-                    placeholder=" العمر..."
-                    id="age"
-                    value={selectedUser.age}
-                    name="age">
-                    <option>4-7</option>
-                    <option>7-10</option>
-                    <option>10-12</option>
-                  </select>
+                <select
+                      placeholder=" العمر..."
+                      id="age" defaultValue={selectedUser.age}
+                      name="age">      
+          <option value="">العمر...</option>
+      <option value="4-7">من 4 الى 7 سنوات</option>
+  
+      <option value="7-10">من 7 الى 10 سنوات</option>
+    
+      <option value="10-12">من 10 الى 12 سنوات</option>
+      <option value=">12">اكبر من 12 سنة</option>
+    
+                    </select>
                   <svg
                     className="icon"
                     xmlns="http://www.w3.org/2000/svg"
@@ -336,9 +347,8 @@ user.services.map((service) => {
         </Modal.Footer>
       </Modal>
 
-      <Toast onClose={() => setShowToast(fals)} show={showToast} delay={3000} autohide bg="success">
-          <Toast.Body>تم حذف العميلة بنجاح</Toast.Body>
-        </Toast>
+
+      
     </Layout>
   );
 };

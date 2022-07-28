@@ -3143,7 +3143,7 @@
   background-position: center center;
   background-size: cover;
 }
-.tf-newservice select + svg{
+.tf-newservice select + svg, .modal select + svg{
   position: absolute;
   left: 10px;
   top: 50%;

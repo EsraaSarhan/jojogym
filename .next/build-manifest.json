@@ -25,15 +25,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/customers": [
+    "/newservice": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/customers.js"
+      "static/chunks/pages/newservice.js"
     ],
-    "/newcustomer": [
+    "/services": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/newcustomer.js"
+      "static/chunks/pages/services.js"
     ]
   },
   "ampFirstPages": []

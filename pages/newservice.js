@@ -27,7 +27,7 @@ const NewService = () => {
   console.log(token)
   const { form, use } = useForm({
     
-    defaultValues: { first_name: "", last_name: "", mobile_number: "", age: "" },
+    defaultValues: { service_name: "", service_type: "", service_status: "", service_cost: "", sessions_count: 0 },
     onSubmit: (values) => 
     
     fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/', {
@@ -170,7 +170,7 @@ const NewService = () => {
                   </div>
                   <div className="row-form st-1 mg-bt-20">
                     <input
-                      type="text"
+                      type="number"
                       placeholder="عدد الجلسات"
                       id="sessions_count"
                       name="sessions_count"

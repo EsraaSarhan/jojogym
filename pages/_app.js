@@ -55,15 +55,6 @@ const App = ({ Component, pageProps }) => {
       </Head>
       {loader && <PreLoader />}
       <Component {...pageProps} />
-
- 
-
- <h1>Esraa</h1>
- {isLoggedIn ? (
- <button onClick={logOut}>Logout</button>
- ) : (
- <button onClick={logIn}>Login</button>
- )}
  
       
     </Fragment>
