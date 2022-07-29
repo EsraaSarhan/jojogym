@@ -10,42 +10,40 @@ import Modal from 'react-bootstrap/Modal';
 import { useForm } from "react-cool-form";
 import useFetchData from '../src/components/customHooks/useFetchData';
 import Toast from 'react-bootstrap/Toast';
+import Pagination from "react-js-pagination";
+import Repeater from 'react-simple-repeater';
+
+
 
 
 
 const Services = () => {
   const [token, setToken] = useState([]);
   const nodeRef = useRef(null);
-
-
-  const { data } = useFetchData('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/?page=1&page_size=10');
-  console.log(data);
-  let sort = 2;
+  //const [pageNumber, setPageNumber] = useState(1);
+  //const [active, setActive] = useState(1);
   const [active, setActive] = useState(1);
+
+
+  const { data } = useFetchData('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/?page=' + active + '&page_size=2');
+  console.log(data);
+  // if (data && data.results && data.results.length > 0) {
+  //   pageNumber = Math.round(data.count / 2);
+  //   console.log(pageNumber)
+  // }
+  let sort = 2;
   const [state, setstate] = useState([]);
   useEffect(() => {
     token = localStorage.getItem('token');
-    pagination(".single-product__", sort, active);
-    let list = document.querySelectorAll(".single-product__");
-    setstate(getPagination(data.length, sort));
+    // pagination(".single-product__", sort, active);
+    // let list = document.querySelectorAll(".single-product__");
+    // setstate(getPagination(data.length, sort));
   }, [active]);
 
 
   const [selectedService, setSelectedService] = useState([]);
   const [isServiceExist, setisServixeExist] = useState(false);
   const [isServiceSaved, setisServiceSaved] = useState(false);
-
-
-  //isServiceExist
-
-
-  useEffect(() => {
-
-    setToken(localStorage.getItem('token'))
-    pagination(".single-product__", sort, active);
-    let list = document.querySelectorAll(".single-product__");
-    setstate(getPagination(list.length, sort));
-  }, [active]);
 
 
   const [show, setShow] = useState(false);
@@ -92,7 +90,10 @@ const Services = () => {
         )
   });
 
-
+  // const handlePageChange = (pageNumber) => {
+  //   console.log(`active page is ${pageNumber}`);
+  //   setActive(pageNumber);
+  // }
   const handleShow = (serviceId) => {
 
     fetch("https://gym-mgmt-system-development.herokuapp.com/api/v1/services/" + serviceId + "/", {
@@ -148,13 +149,13 @@ const Services = () => {
 
   const fingerPrintSettings = (service) => {
     //https://gym-mgmt-system-development.herokuapp.com/api/v1/services/5/add_fingerprint_service/'
-    if(service.service_profile_status === "1"){
-      fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/'+ service.id +'/delete_fingerprint_service/', {
+    if (service.service_profile_status === "1") {
+      fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/' + service.id + '/delete_fingerprint_service/', {
         method: 'DELETE',
         headers: {
           'Authorization': 'Token ' + token
         }
-  
+
       })
         .then(res => res.json())
         .then(
@@ -170,22 +171,22 @@ const Services = () => {
             else {
               setshowUnLinkedToast(false)
             }
-  
+
           },
           (error) => {
             console.log(error)
             setshowUnLinkedToast(false)
-  
+
           }
         )
     }
-    else{
+    else {
       fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/' + service.id + '/add_fingerprint_service/', {
         method: 'POST',
         headers: {
           'Authorization': 'Token ' + token
         }
-  
+
       })
         .then(res => res.json())
         .then(
@@ -201,17 +202,17 @@ const Services = () => {
             else {
               setshowLinkedToast(false)
             }
-  
+
           },
           (error) => {
             console.log(error)
             setshowLinkedToast(false)
-  
+
           }
         )
     }
 
-  
+
   };
   return (
     <Layout bodyClass={"services"}>
@@ -249,66 +250,69 @@ const Services = () => {
               </div>
             </div>
             <div className="col-12">
-            {data && data.length>0 ? (
-            <>
+              {data && data.results && data.results.length > 0 ? (
+                <>
                   <table className="table table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">اسم الخدمة</th>
-                    <th scope="col">نوع الخدمة</th>
-                    <th scope="col">حالة الخدمة</th>
-                    <th scope="col">تكلفة الخدمة</th>
-                    <th scope="col">عدد الجلسات</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                  {data && (
-                    data.map((service, index) => (
-                      <tr key={service.id}>
-                        <th scope="row">{index}</th>
-                        <td>{service.service_name}</td>
-                        <td>{service.service_type}</td>
-                        <td>{service.service_status}</td>
-                        <td>{service.service_cost}</td>
-                        <td>{service.sessions_count}</td>
-                        <td>
-                        {service && service.service_profile_status === "1" ? (
-                                <>
-<button className="btn btn-action" title="ازالة الخدمة من جهاز البصمة" onClick={event => fingerPrintSettings(service)}> 
-                              <i className="fas fa-minus-circle">
-                              
-                                </i><i className="fas fa-fingerprint"></i>
-                          </button>
-                                </>) : (
-        <button className="btn btn-action" title="اضافة الخدمةالى جهاز البصمة" onClick={event => fingerPrintSettings(service)}> 
-        <i className="fas fa-plus-circle">
-        
-          </i><i className="fas fa-fingerprint"></i>
-    </button>
-                                 )}
-                          
-                          <button className="btn btn-action" title="تعديل الخدمة" onClick={event => handleShow(service.id)}><i className="fas fa-edit"></i></button>
-                          <button className="btn btn-action" title="مسح الخدمة" onClick={event => deleteService(service.id)}><i className="fas fa-trash"></i></button>
-                        </td>
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">اسم الخدمة</th>
+                        <th scope="col">نوع الخدمة</th>
+                        <th scope="col">حالة الخدمة</th>
+                        <th scope="col">تكلفة الخدمة</th>
+                        <th scope="col">عدد الجلسات</th>
+                        <th scope="col"></th>
                       </tr>
+                    </thead>
+                    <tbody>
 
-                    ))
-                  )}
+                      {data.results && (
+                        data.results.map((service, index) => (
+                          <tr key={service.id}>
+                            <th scope="row">{index}</th>
+                            <td>{service.service_name}</td>
+                            <td>{service.service_type}</td>
+                            <td>{service.service_status}</td>
+                            <td>{service.service_cost}</td>
+                            <td>{service.sessions_count}</td>
+                            <td>
+                              {service && service.service_profile_status === "1" ? (
+                                <>
+                                  <button className="btn btn-action" title="ازالة الخدمة من جهاز البصمة" onClick={event => fingerPrintSettings(service)}>
+                                    <i className="fas fa-minus-circle">
+
+                                    </i><i className="fas fa-fingerprint"></i>
+                                  </button>
+                                </>) : (
+                                <button className="btn btn-action" title="اضافة الخدمةالى جهاز البصمة" onClick={event => fingerPrintSettings(service)}>
+                                  <i className="fas fa-plus-circle">
+
+                                  </i><i className="fas fa-fingerprint"></i>
+                                </button>
+                              )}
+
+                              <button className="btn btn-action" title="تعديل الخدمة" onClick={event => handleShow(service.id)}><i className="fas fa-edit"></i></button>
+                              <button className="btn btn-action" title="مسح الخدمة" onClick={event => deleteService(service.id)}><i className="fas fa-trash"></i></button>
+                            </td>
+                          </tr>
+
+                        ))
+                      )}
 
 
-                </tbody>
+                    </tbody>
 
-              </table>
-            </>) : (
-            <div className="alert alert-danger" role="alert">
+                  </table>
+               
 
-            <h6>
-              حدث خطأ اثناء استرجاع البيانات الرجاء المحاولة لاحقا            </h6>          </div>
-          )}
-              
+
+                </>) : (
+                <div className="alert alert-danger" role="alert">
+
+                  <h6>
+                    حدث خطأ اثناء استرجاع البيانات الرجاء المحاولة لاحقا            </h6>          </div>
+              )}
+
             </div>
           </div>
         </div>

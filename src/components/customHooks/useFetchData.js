@@ -21,7 +21,7 @@ function useFetchData( url) {
           })
           .then((res) => res.json())
           .then((result) => {
-            setPosts(result.results);
+            setPosts(result);
           }).catch((err) => {
             console.log(err);
         });

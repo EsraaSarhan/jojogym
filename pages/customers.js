@@ -28,6 +28,11 @@ const Customers = () => {
   const [isUserExist, setisUserExist] = useState(false);
   const nodeRef = useRef(null);
 
+
+  const [showDeletedToast, setshowDeletedToast] = useState(false);
+  const [showLinkedToast, setshowLinkedToast] = useState(false);
+  const [showUnLinkedToast, setshowUnLinkedToast] = useState(false);
+
   //isUserExist
 
 
@@ -137,7 +142,72 @@ const Customers = () => {
     )
   };
 
+  const fingerPrintSettings = (user) => {
+    if (user.service_profile_status === "1") {
+      fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/' + user.id + '/delete_user_fingerprint_profile/', {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Token ' + token
+        }
 
+      })
+        .then(res => res.json())
+        .then(
+          (result) => {
+            console.log(result)
+            if (result.id) {
+              setshowUnLinkedToast(true);
+              user.fingerprint_profile_status = "2";
+              setInterval(() => {
+                window.location = "./customer"
+              }, 1000);
+            }
+            else {
+              setshowUnLinkedToast(false)
+            }
+
+          },
+          (error) => {
+            console.log(error)
+            setshowUnLinkedToast(false)
+
+          }
+        )
+    }
+    else {
+      fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/' + user.id + '/add_user_fingerprint_profile/', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Token ' + token
+        }
+
+      })
+        .then(res => res.json())
+        .then(
+          (result) => {
+            console.log(result)
+            if (result.id) {
+              setshowLinkedToast(true)
+              user.fingerprint_profile_status = "1";
+              setInterval(() => {
+                window.location = "./customers"
+              }, 1000);
+            }
+            else {
+              setshowLinkedToast(false)
+            }
+
+          },
+          (error) => {
+            console.log(error)
+            setshowLinkedToast(false)
+
+          }
+        )
+    }
+
+
+  };
 
 
 
@@ -146,9 +216,22 @@ const Customers = () => {
       
       <PageBanner pageName={"العميلات"} />
         
-      <Toast onClose={() => setShowToast(false)} show={showToast} delay={5000} bg="success" autohide className="bg-success toast-container top-0 start-0 p-3">
+       <Toast nodeRef={nodeRef} onClose={() => setshowDeletedToast(false)} show={showDeletedToast} autohide delay={1500} bg="success" className="bg-success toast-container top-0 start-0 p-3">
           <Toast.Body className="Dark text-white">
-            <h6  ref={nodeRef}>تم حذف العميلة بنجاح</h6>
+            <h6 ref={nodeRef}>تم حذف العميلة بنجاح</h6>
+          </Toast.Body>
+        </Toast>
+
+        <Toast nodeRef={nodeRef} onClose={() => setshowLinkedToast(false)} show={showLinkedToast} autohide delay={1500} bg="success" className="bg-success toast-container top-0 start-0 p-3">
+          <h6 ref={nodeRef}>تم ربط العميلة بجهاز البصمة</h6>
+          <Toast.Body className="Dark text-white">
+          </Toast.Body>
+        </Toast>
+
+        <Toast nodeRef={nodeRef} onClose={() => setshowLinkedToast(false)} show={showLinkedToast} autohide delay={1500} bg="success" className="bg-success toast-container top-0 start-0 p-3">
+          <h6 ref={nodeRef}>تم ازالة
+            ربط الخدمة بجهاز البصمة</h6>
+          <Toast.Body className="Dark text-white">
           </Toast.Body>
         </Toast>
       <section className="tf-section tf-program-details">
@@ -185,8 +268,8 @@ const Customers = () => {
 
              
 
-                  {data && (
-                    data.map((user, index) => (
+                  {data && data.results && (
+                    data.results.map((user, index) => (
                       <tr key={user.id}>
                         <th scope="row">{index}</th>
                         <td>{user.first_name}</td>
@@ -224,6 +307,20 @@ user.services.map((service) => {
                         </td>
                         
                         <td>
+                        {user && user.fingerprint_profile_status === "1" ? (
+                                <>
+                                  <button className="btn btn-action" title="ازالة العميلة من جهاز البصمة" onClick={event => fingerPrintSettings(user)}>
+                                    <i className="fas fa-minus-circle">
+
+                                    </i><i className="fas fa-fingerprint"></i>
+                                  </button>
+                                </>) : (
+                                <button className="btn btn-action" title="اضافة العميلة الى جهاز البصمة" onClick={event => fingerPrintSettings(user)}>
+                                  <i className="fas fa-plus-circle">
+
+                                  </i><i className="fas fa-fingerprint"></i>
+                                </button>
+                              )}
                           <button className="btn btn-action" onClick={event => handleShow(user.id)}><i className="fas fa-edit"></i></button>
                           <button className="btn btn-action" onClick={event => deleteUser(user.id)}><i className="fas fa-trash"></i></button>
                         </td>
