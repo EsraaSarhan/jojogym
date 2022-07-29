@@ -25,7 +25,7 @@ const Services = () => {
   const [active, setActive] = useState(1);
 
 
-  const { data } = useFetchData('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/?page=' + active + '&page_size=2');
+  const { data } = useFetchData('http://jms-apis.herokuapp.com/api/v1/services/?page=' + active + '&page_size=100');
   console.log(data);
   // if (data && data.results && data.results.length > 0) {
   //   pageNumber = Math.round(data.count / 2);
@@ -61,7 +61,7 @@ const Services = () => {
     },
     onSubmit: (values) =>
 
-      fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/' + selectedService.id + '/', {
+      fetch('http://jms-apis.herokuapp.com/api/v1/services/' + selectedService.id + '/', {
         method: 'Put',
         headers: {
           'Accept': 'application/json',
@@ -96,7 +96,7 @@ const Services = () => {
   // }
   const handleShow = (serviceId) => {
 
-    fetch("https://gym-mgmt-system-development.herokuapp.com/api/v1/services/" + serviceId + "/", {
+    fetch("http://jms-apis.herokuapp.com/api/v1/services/" + serviceId + "/", {
       "method": "GET",
       "headers": {
         "content-type": "application/json",
@@ -123,7 +123,7 @@ const Services = () => {
   };
 
   const deleteService = (serviceId) => {
-    fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/' + serviceId + '/', {
+    fetch('http://jms-apis.herokuapp.com/api/v1/services/' + serviceId + '/', {
       method: 'DELETE',
       headers: {
         'Authorization': 'Token ' + token
@@ -137,7 +137,7 @@ const Services = () => {
           setInterval(() => {
             window.location = "./services"
           }, 1000);
-          //data = useFetchData('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/?page=1&page_size=10');
+          //data = useFetchData('http://jms-apis.herokuapp.com/api/v1/customers/?page=1&page_size=10');
         },
         (error) => {
           console.log(error)
@@ -148,9 +148,9 @@ const Services = () => {
   };
 
   const fingerPrintSettings = (service) => {
-    //https://gym-mgmt-system-development.herokuapp.com/api/v1/services/5/add_fingerprint_service/'
+    //http://jms-apis.herokuapp.com/api/v1/services/5/add_fingerprint_service/'
     if (service.service_profile_status === "1") {
-      fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/' + service.id + '/delete_fingerprint_service/', {
+      fetch('http://jms-apis.herokuapp.com/api/v1/services/' + service.id + '/delete_fingerprint_service/', {
         method: 'DELETE',
         headers: {
           'Authorization': 'Token ' + token
@@ -181,7 +181,7 @@ const Services = () => {
         )
     }
     else {
-      fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/' + service.id + '/add_fingerprint_service/', {
+      fetch('http://jms-apis.herokuapp.com/api/v1/services/' + service.id + '/add_fingerprint_service/', {
         method: 'POST',
         headers: {
           'Authorization': 'Token ' + token

@@ -39,6 +39,7 @@
     "react-simple-repeater": "^0.1.10",
     "react-visibility-sensor": "^5.1.1",
     "swiper": "^8.0.7",
+    "underscore": "^1.13.4",
     "universal-cookie": "^4.0.4",
     "wowjs": "^1.1.3"
   },

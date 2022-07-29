@@ -30,7 +30,7 @@ const NewService = () => {
     defaultValues: { service_name: "", service_type: "", service_status: "", service_cost: "", sessions_count: 0 },
     onSubmit: (values) => 
     
-    fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/', {
+    fetch('http://jms-apis.herokuapp.com/api/v1/services/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -45,10 +45,10 @@ const NewService = () => {
         console.log(result);
        // console.log(result.non_field_errors[0]);
        // this.setState({ datastore: items })        
-       if(result.key){
+       if(result.id){
         
         // setState({redirect:true})
-        // window.location.href = '/customers';
+        window.location.href = '/services';
 
        }
       },
@@ -60,7 +60,7 @@ const NewService = () => {
     )
       });
 
-  //https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/
+  //http://jms-apis.herokuapp.com/api/v1/customers/
 
   
   return (

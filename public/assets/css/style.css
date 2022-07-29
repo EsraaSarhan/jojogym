@@ -628,7 +628,8 @@ input[type="email"]::placeholder,
 input[type="url"]::placeholder,
 input[type="search"]::placeholder,
 input[type="tel"]::placeholder,
-input[type="color"]::placeholder {
+input[type="color"]::placeholder ,
+.dropdown-toggle > span{
     font-family: 'Salsa', sans-serif;
     font-size  : 18px;
     font-weight: 400;
@@ -708,7 +709,9 @@ input[type="submit"]:focus {
     -moz-transition   : all ease 0.3s;
     transition        : all ease 0.3s;
 }
-
+.error.light{
+    color: wheat;
+}
 /* Typography
 -------------------------------------------------------------- */
 
@@ -1987,12 +1990,28 @@ a:focus {
 }
 
 .form-search-widget form input,
-.form-search-widget form input::placeholder {
+.form-search-widget form input::placeholder,
+.dropdown-toggle > span {
     font-family: 'Rubik', sans-serif;
     font-size: 16px;
     line-height: 30px;
 }
+.dropdown-toggle > span{
 
+    font-size: 22px;
+}
+.dropdown-toggle{
+    border:none;
+}
+.dropdown-menu.show {
+    padding: 10px !important;
+}
+.actions-btn.btn.btn-light{
+    display: none;
+}
+.btn:not(:disabled):not(.disabled){
+    border: none;
+}
 .form-search-widget form input {
     background: #eff1f4;
     border: none;
@@ -2494,6 +2513,24 @@ a:focus {
     font-size: 14px;
     margin-left: -5px;
 }
+
+.dropdown-toggle > span{
+    text-align: right !important;
+}
+.form-check {
+    position: relative;
+    display: block;
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: row-reverse;
+}
+.form-check-label {
+    padding-left: 1.25rem;
+    margin-bottom: 0;
+    cursor: pointer;
+    text-align: right;
+}
+
 .btn.btn-action{
     font-size: 18px;
     background: transparent;
@@ -2516,4 +2553,10 @@ a:focus {
 }
 .toast.show{
     z-index: 10000;
+}
+
+button:disabled{
+    opacity: 0.7;
+    cursor: none;
+    user-select: none;
 }

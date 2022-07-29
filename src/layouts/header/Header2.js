@@ -27,7 +27,7 @@ const Header2 = () => {
     
     const logOut = () => {
 
-    fetch("https://gym-mgmt-system-development.herokuapp.com/api/v1/auth/logout/", {
+    fetch("http://jms-apis.herokuapp.com/api/v1/auth/logout/", {
   "method": "POST",
   "headers": {
     "content-type": "application/json",

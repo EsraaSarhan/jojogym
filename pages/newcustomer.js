@@ -7,6 +7,8 @@ import useFetchData from '../src/components/customHooks/useFetchData'
 
 import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 
+import {findWhere} from 'underscore'
+
 import {
   LeftArrow,
   LeftArrowWhite,
@@ -26,20 +28,62 @@ const NewCustomer = () => {
   const [active, setActive] = useState(1);
   const [state, setstate] = useState([]);
 
-  const { data } = useFetchData('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/');
-  console.log(data);
+  const { data } = useFetchData('http://jms-apis.herokuapp.com/api/v1/services/?page=1&page_size=100');
+  console.log(data, "esr");
 
+  const gymServices = [
+    ];
+
+    /**{ key: "au", label: "Australia" },
+    { key: "ca", label: "Canada" },
+    { key: "us", label: "USA" },
+    { key: "pl", label: "Poland" },
+    { key: "es", label: "Spain" },
+    { key: "fr", label: "France" },
+   */
+
+    if(data && data.results && data.results.length > 0){
+      data.results.forEach((service) => {
+        service.label = service.service_name;
+        service.key = JSON.stringify(service)//toString(service);
+      })
+
+      console.log(data, "errrrr");
+
+    }
+
+
+   
+
+
+
+
+    const convertStringToObj = (selected) => {
+     
+
+    };
+
+    
   useEffect(() => {
   //  token = localStorage.getItem('token');
     setToken(localStorage.getItem('token'))
   }, [active]);
   console.log(token)
-  const { form, use } = useForm({
+  const { form, use ,  formState} = useForm({
     
-    defaultValues: { first_name: "", last_name: "", mobile_number: "", age: "" },
-    onSubmit: (values) => 
-    
-    fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/', {
+    defaultValues: { first_name: "", last_name: "", mobile_number: "", age: "", services: gymServices },
+    mode: "onChange",
+    onSubmit: (values,e) => {
+      if(values.services.length > 0){
+        values.services.forEach(element => {
+          element = JSON.parse(element);
+          gymServices.push(element);
+        });
+
+        values.services = gymServices;
+      }
+      
+    fetch('http://jms-apis.herokuapp.com/api/v1/customers/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -66,10 +110,13 @@ const NewCustomer = () => {
 
        
       }
-    )
+    )}
       });
 
-  //https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/
+      const errors = use("errors");
+
+
+  //http://jms-apis.herokuapp.com/api/v1/customers/
 
   
   return (
@@ -110,7 +157,10 @@ const NewCustomer = () => {
                       id="first_name"
                       name="first_name"
                       placeholder="الأسم الأول ......"
+                      required 
+                      error={errors.first_name}
                     />
+                     <span className="error light">{errors.first_name && <span>الاسم الاول المستخدم مطلوب</span>}</span>
                   </div>
                   <div className="row-form st-1 mg-bt-20">
                     <input
@@ -118,7 +168,10 @@ const NewCustomer = () => {
                       placeholder="الأسم الأخير ......"
                       id="last_name"
                       name="last_name"
-                    />
+                      required
+                      error={errors.last_name}
+                      />
+                       <span className="error light">{errors.last_name && <span>الاسم الاخير المستخدم مطلوب</span>}</span>
                   
                   </div>
                   <div className="row-form st-1 mg-bt-20">
@@ -126,8 +179,11 @@ const NewCustomer = () => {
                       type="text"
                       placeholder="رقم الجوال ..."
                       id="mobile_number"
+                      required
                       name="mobile_number"
-                    />
+                      error={errors.mobile_number}
+                      />
+                       <span className="error light">{errors.mobile_number && <span>الاسم الاخير المستخدم مطلوب</span>}</span>
                     
                   </div>
 
@@ -135,7 +191,9 @@ const NewCustomer = () => {
                   
                     <select
                       placeholder=" العمر..."
-                      id="age"
+                      id="age" required
+                      error={errors.age}
+                      
                       name="age">      
           <option value="">العمر...</option>
       <option value="4-7">من 4 الى 7 سنوات</option>
@@ -162,15 +220,22 @@ const NewCustomer = () => {
                         />
                       </g>
                     </svg>
+
+                    <span className="error light">{errors.age && <span>عمر المستخدم مطلوب</span>}</span>
+
                   </div>
 
 
-                  {data ? (
+                  {data && data.results && data.results.length > 0 ? (
                     <>
-                     <div className="row-form st-1 mg-bt-20">
+                     <div className="row-form st-1 mg-bt-20 w-100">
                   <DropdownMultiselect
-                    options={data}
-                    name="countries"
+                    options={data.results}
+                    name="services" 
+                    placeholder="الخدمات ......"
+                    selectDeselectLabel="جميع الخدمات"
+                   
+                    
                   />
                   </div>
                       </>
@@ -180,15 +245,24 @@ const NewCustomer = () => {
                  
 
                   <div className="row-form ml-auto mt-5 mr-auto">
-                    <button className="fl-btn st-14">
-                      <span className="inner">حفظ بيانات العميلة</span>
+                  
+
+{errors.first_name || errors.last_name || errors.mobile_number || errors.age  ? (
+                                <>
+                                 <button className="fl-btn st-14" disabled>
+                      <span className="inner" >حفظ بيانات العميلة</span>
                     </button>
+                                </>) : (
+                                <button className="fl-btn st-14">
+                                <span className="inner">حفظ بيانات العميلة</span>
+                              </button>
+                              )}
+                    
                   </div>
                 </form>
               </div>
             </div>
-          </div>
-        </div>
+          </div>        </div>
       </section>
 
     

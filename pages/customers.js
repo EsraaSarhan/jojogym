@@ -17,7 +17,7 @@ import useFetchData from '../src/components/customHooks/useFetchData'
 
 const Customers = () => {
 
-  const { data } = useFetchData('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/?page=1&page_size=10');
+  const { data } = useFetchData('http://jms-apis.herokuapp.com/api/v1/customers/?page=1&page_size=100');
   console.log(data);
 
   let sort = 6;
@@ -53,13 +53,13 @@ const Customers = () => {
 
   const handleClose = () => setShow(false);
 
-  //https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/
+  //http://jms-apis.herokuapp.com/api/v1/customers/
 
   const { form, use } = useForm({
     defaultValues: { first_name: selectedUser.first_name, last_name: selectedUser.last_name, mobile_number: selectedUser.mobile_number, age: selectedUser.age },
     onSubmit: (values) =>
 
-      fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/' + selectedUser.id + '/', {
+      fetch('http://jms-apis.herokuapp.com/api/v1/customers/' + selectedUser.id + '/', {
         method: 'Put',
         headers: {
           'Accept': 'application/json',
@@ -91,7 +91,7 @@ const Customers = () => {
 
   const handleShow = (userId) => {
 
-    fetch("https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/" + userId + "/", {
+    fetch("http://jms-apis.herokuapp.com/api/v1/customers/" + userId + "/", {
       "method": "GET",
       "headers": {
         "content-type": "application/json",
@@ -118,7 +118,7 @@ const Customers = () => {
   };
 
   const deleteUser = (userId) => {
-    fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/' + userId + '/', {
+    fetch('http://jms-apis.herokuapp.com/api/v1/customers/' + userId + '/', {
       method: 'DELETE',
       headers:{
         'Authorization': 'Token ' + token
@@ -132,7 +132,7 @@ const Customers = () => {
         setInterval(() => {
           window.location = "./customers"
         }, 1000);
-        //data = useFetchData('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/?page=1&page_size=10');
+        //data = useFetchData('http://jms-apis.herokuapp.com/api/v1/customers/?page=1&page_size=10');
       },
       (error) => {
         console.log(error)
@@ -144,7 +144,7 @@ const Customers = () => {
 
   const fingerPrintSettings = (user) => {
     if (user.service_profile_status === "1") {
-      fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/' + user.id + '/delete_user_fingerprint_profile/', {
+      fetch('http://jms-apis.herokuapp.com/api/v1/customers/' + user.id + '/delete_user_fingerprint_profile/', {
         method: 'DELETE',
         headers: {
           'Authorization': 'Token ' + token
@@ -175,7 +175,7 @@ const Customers = () => {
         )
     }
     else {
-      fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/customers/' + user.id + '/add_user_fingerprint_profile/', {
+      fetch('http://jms-apis.herokuapp.com/api/v1/customers/' + user.id + '/add_user_fingerprint_profile/', {
         method: 'POST',
         headers: {
           'Authorization': 'Token ' + token
@@ -259,7 +259,7 @@ const Customers = () => {
                     <th scope="col">رقم الجوال </th>
                     
                     <th scope="col">العمر</th>
-                    <th scope="col">الاشتراكات</th>
+                    <th scope="col">الخدمات</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -371,7 +371,7 @@ user.services.map((service) => {
                   />
 
                 </div>
-                <div className="row-form st-1">
+                <div className="row-form st-1 mg-bt-20">
                   <input
                     type="text"
                     placeholder="رقم الجوال ..."
@@ -382,7 +382,7 @@ user.services.map((service) => {
 
                 </div>
 
-                <div className="row-form st-1">
+                <div className="row-form st-1 mg-bt-20 position-relative">
 
                 <select
                       placeholder=" العمر..."
@@ -414,7 +414,7 @@ user.services.map((service) => {
                     </g>
                   </svg>
                 </div>
-                <div className="row-form st-1">
+                <div className="row-form st-1 mg-bt-20">
                   <DropdownMultiselect
                     options={["Australia", "Canada", "USA", "Poland", "Spain", "France"]}
                     name="countries"
@@ -434,14 +434,7 @@ user.services.map((service) => {
             </div>
           )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
+
       </Modal>
 
 

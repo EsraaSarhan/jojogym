@@ -375,7 +375,7 @@
   color: var(--primary-color1);
 }
 
-.fl-btn.st-14:hover,
+.fl-btn.st-14:not(:disabled):hover,
 .fl-btn.st-14:hover .inner::before,
 .fl-btn.st-14:hover .inner::after {
   color: var(--primary-color2);
@@ -396,6 +396,7 @@
 .fl-btn.st-5:hover .inner::before,
 .fl-btn.st-5:hover .inner::after,
 .fl-btn.st-13:hover,
+.fl-btn.st-13:not(:disabled):hover,
 .fl-btn.st-13:hover .inner::before,
 .fl-btn.st-13:hover .inner::after {
   color: var(--primary-color3);
@@ -419,7 +420,8 @@
   border-color: var(--primary-color1);
 }
 
-.fl-btn.st-14:hover {
+.fl-btn.st-14:hover ,
+.fl-btn.st-14:not(:disabled):hover {
   background-color: var(--primary-color1);
 }
 /* loading-overlay
@@ -3243,7 +3245,7 @@
   width: 48%;
 }
 
-.fl-register .row-form.st-1 {
+.fl-register .row-form.st-1 input, .fl-register .row-form.st-1 select, .fl-register .row-form.st-1 .dropdown {
   background-image: url(../images/background/bg-input-register.png);
   background-repeat: no-repeat;
   background-position: center center;

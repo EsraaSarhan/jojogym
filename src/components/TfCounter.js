@@ -16,14 +16,11 @@ const TfCounter = ({ nonst }) => {
   const { form, use } = useForm({
     defaultValues: { username: "", email: "", password: "" },
     onSubmit: (values) => 
-    fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/auth/login/', {
+    fetch('http://jms-apis.herokuapp.com/api/v1/auth/login/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      //'Access-Control-Allow-Origin': '*',
-      //  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      //   'Cookie': 'testtt'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(values, undefined, 2)
     })
