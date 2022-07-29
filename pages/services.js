@@ -34,7 +34,10 @@ const Services = () => {
   let sort = 2;
   const [state, setstate] = useState([]);
   useEffect(() => {
-    token = localStorage.getItem('token');
+    //token = localStorage.getItem('token');
+    setToken(localStorage.getItem('token'));
+
+
     // pagination(".single-product__", sort, active);
     // let list = document.querySelectorAll(".single-product__");
     // setstate(getPagination(data.length, sort));

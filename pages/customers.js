@@ -38,7 +38,7 @@ const Customers = () => {
 
   useEffect(() => {
 
-    setToken(localStorage.getItem('token'))
+    setToken(localStorage.getItem('token'));
     // pagination(".single-product__", sort, active);
     // let list = document.querySelectorAll(".single-product__");
     // setstate(getPagination(list.length, sort));
