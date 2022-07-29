@@ -332,7 +332,7 @@ user.services.map((service) => {
               </form>
             </>
           ) : (
-            <div class="alert alert-danger" role="alert">
+            <div className="alert alert-danger" role="alert">
               عذرا حدث خطأ في ارجاع معلومات العميل
             </div>
           )}
