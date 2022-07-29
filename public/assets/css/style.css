@@ -2490,7 +2490,7 @@ a:focus {
 .table thead th, .table tbody td{
     text-align: center;
 }
-.table .fa-plus-circle{
+.table .fa-plus-circle, .table .fa-minus-circle{
     font-size: 14px;
     margin-left: -5px;
 }

@@ -146,53 +146,91 @@ const Services = () => {
       )
   };
 
-  const fingerPrintSettings = (serviceId) => {
+  const fingerPrintSettings = (service) => {
     //https://gym-mgmt-system-development.herokuapp.com/api/v1/services/5/add_fingerprint_service/'
-
-    fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/' + serviceId + '/add_fingerprint_service/', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Token ' + token
-      }
-
-    })
-      .then(res => res.json())
-      .then(
-        (result) => {
-          console.log(result)
-          if (result.id) {
-            setshowDeletedToast(true)
-          }
-          else {
-            setshowDeletedToast(false)
-          }
-
-        },
-        (error) => {
-          console.log(error)
-          setshowDeletedToast(false)
-
+    if(service.service_profile_status === "1"){
+      fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/'+ service.id +'/delete_fingerprint_service/', {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Token ' + token
         }
-      )
+  
+      })
+        .then(res => res.json())
+        .then(
+          (result) => {
+            console.log(result)
+            if (result.id) {
+              setshowUnLinkedToast(true);
+              service.service_profile_status = "2";
+              setInterval(() => {
+                window.location = "./services"
+              }, 1000);
+            }
+            else {
+              setshowUnLinkedToast(false)
+            }
+  
+          },
+          (error) => {
+            console.log(error)
+            setshowUnLinkedToast(false)
+  
+          }
+        )
+    }
+    else{
+      fetch('https://gym-mgmt-system-development.herokuapp.com/api/v1/services/' + service.id + '/add_fingerprint_service/', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Token ' + token
+        }
+  
+      })
+        .then(res => res.json())
+        .then(
+          (result) => {
+            console.log(result)
+            if (result.id) {
+              setshowLinkedToast(true)
+              service.service_profile_status = "1";
+              setInterval(() => {
+                window.location = "./services"
+              }, 1000);
+            }
+            else {
+              setshowLinkedToast(false)
+            }
+  
+          },
+          (error) => {
+            console.log(error)
+            setshowLinkedToast(false)
+  
+          }
+        )
+    }
+
+  
   };
   return (
     <Layout bodyClass={"services"}>
       <PageBanner pageName={"الخدمات"} />
 
       <section className="tf-section tf-servicesList">
-        <Toast nodeRef={nodeRef} onClose={() => setshowDeletedToast(false)} show={showDeletedToast} delay={5000} bg="success" className="bg-success toast-container top-0 start-0 p-3">
+        <Toast nodeRef={nodeRef} onClose={() => setshowDeletedToast(false)} show={showDeletedToast} autohide delay={1500} bg="success" className="bg-success toast-container top-0 start-0 p-3">
           <Toast.Body className="Dark text-white">
             <h6 ref={nodeRef}>تم حذف الخدمة بنجاح</h6>
           </Toast.Body>
         </Toast>
 
-        <Toast nodeRef={nodeRef} onClose={() => setshowLinkedToast(false)} show={showLinkedToast} delay={2000} bg="success" className="bg-success toast-container top-0 start-0 p-3">
+        <Toast nodeRef={nodeRef} onClose={() => setshowLinkedToast(false)} show={showLinkedToast} autohide delay={1500} bg="success" className="bg-success toast-container top-0 start-0 p-3">
           <h6 ref={nodeRef}>تم ربط الخدمة بجهاز البصمة</h6>
           <Toast.Body className="Dark text-white">
           </Toast.Body>
         </Toast>
 
-        <Toast nodeRef={nodeRef} onClose={() => setshowLinkedToast(false)} show={showLinkedToast} delay={2000} bg="success" className="bg-success toast-container top-0 start-0 p-3">
+        <Toast nodeRef={nodeRef} onClose={() => setshowLinkedToast(false)} show={showLinkedToast} autohide delay={1500} bg="success" className="bg-success toast-container top-0 start-0 p-3">
           <h6 ref={nodeRef}>تم ازالة
             ربط الخدمة بجهاز البصمة</h6>
           <Toast.Body className="Dark text-white">
@@ -230,15 +268,28 @@ const Services = () => {
                   {data && (
                     data.map((service, index) => (
                       <tr key={service.id}>
-                        <th scope="row">{service.id}</th>
+                        <th scope="row">{index}</th>
                         <td>{service.service_name}</td>
                         <td>{service.service_type}</td>
                         <td>{service.service_status}</td>
                         <td>{service.service_cost}</td>
                         <td>{service.sessions_count}</td>
                         <td>
-                          <button className="btn btn-action" title="اضافة الخدمةالى جهاز البصمة" onClick={event => fingerPrintSettings(service.id)}> <i className="fas fa-plus-circle"></i><i className="fas fa-fingerprint"></i>
+                        {service && service.service_profile_status === "1" ? (
+                                <>
+<button className="btn btn-action" title="ازالة الخدمة من جهاز البصمة" onClick={event => fingerPrintSettings(service)}> 
+                              <i className="fas fa-minus-circle">
+                              
+                                </i><i className="fas fa-fingerprint"></i>
                           </button>
+                                </>) : (
+        <button className="btn btn-action" title="اضافة الخدمةالى جهاز البصمة" onClick={event => fingerPrintSettings(service)}> 
+        <i className="fas fa-plus-circle">
+        
+          </i><i className="fas fa-fingerprint"></i>
+    </button>
+                                 )}
+                          
                           <button className="btn btn-action" title="تعديل الخدمة" onClick={event => handleShow(service.id)}><i className="fas fa-edit"></i></button>
                           <button className="btn btn-action" title="مسح الخدمة" onClick={event => deleteService(service.id)}><i className="fas fa-trash"></i></button>
                         </td>
