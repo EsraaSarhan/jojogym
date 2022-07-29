@@ -50,7 +50,7 @@ const App = ({ Component, pageProps }) => {
           rel="stylesheet"
         />
         <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css" integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe" crossOrigin="anonymous" async />
-        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossOrigin="anonymous" async></script>
                 <script src="https://cdn.rtlcss.com/bootstrap/v4.5.3/js/bootstrap.bundle.min.js" integrity="sha384-40ix5a3dj6/qaC7tfz0Yr+p9fqWLzzAXiwxVLt9dw7UjQzGYw6rWRhFAnRapuQyK" crossOrigin="anonymous" async></script>
       </Head>
       {loader && <PreLoader />}
