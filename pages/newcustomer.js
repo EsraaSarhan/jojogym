@@ -28,7 +28,7 @@ const NewCustomer = () => {
   const [active, setActive] = useState(1);
   const [state, setstate] = useState([]);
 
-  const { data } = useFetchData('http://jms-apis.herokuapp.com/api/v1/services/?page=1&page_size=100');
+  const { data } = useFetchData('https://gms-apis.herokuapp.com/api/v1/services/?page=1&page_size=100');
   console.log(data, "esr");
 
   const gymServices = [
@@ -45,7 +45,7 @@ const NewCustomer = () => {
     if(data && data.results && data.results.length > 0){
       data.results.forEach((service) => {
         service.label = service.service_name;
-        service.key = JSON.stringify(service)//toString(service);
+        service.key = Jservice.service_name//toString(service);
       })
 
       console.log(data, "errrrr");
@@ -83,7 +83,7 @@ const NewCustomer = () => {
         values.services = gymServices;
       }
       
-    fetch('http://jms-apis.herokuapp.com/api/v1/customers/', {
+    fetch('https://gms-apis.herokuapp.com/api/v1/customers/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -116,7 +116,7 @@ const NewCustomer = () => {
       const errors = use("errors");
 
 
-  //http://jms-apis.herokuapp.com/api/v1/customers/
+  //https://gms-apis.herokuapp.com/api/v1/customers/
 
   
   return (

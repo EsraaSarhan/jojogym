@@ -14,9 +14,9 @@ const TfCounter = ({ nonst }) => {
 // }
 
   const { form, use } = useForm({
-    defaultValues: { username: "", email: "", password: "" },
+    defaultValues: { username: "", password: "" },
     onSubmit: (values) => 
-    fetch('http://jms-apis.herokuapp.com/api/v1/auth/login/', {
+    fetch('https://gms-apis.herokuapp.com/api/v1/auth/login/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -86,7 +86,7 @@ const TfCounter = ({ nonst }) => {
                       />
                         <span className="error">{errors.username && <span>اسم المستخدم مطلوب</span>}</span>
                     </div>
-                    <div className="row-form st-1 mg-bt-20">
+                    {/* <div className="row-form st-1 mg-bt-20">
                       <input
                         type="email" required
                         placeholder="البريد الالكتروني"
@@ -95,7 +95,7 @@ const TfCounter = ({ nonst }) => {
                         error={errors.email}
                       />
                     <span className="error">{errors.email && <span> البريد الالكتروني مطلوب مثال (example@example.com)</span>}</span>
-                    </div>
+                    </div> */}
                     <div className="row-form st-1 mg-bt-20">
                       <input
                         type="password" required
@@ -112,6 +112,11 @@ const TfCounter = ({ nonst }) => {
                       </button>
                     </div>
                   </form>
+
+                  <div className='mt-3'>
+                    <p className='fa-2x'>مستخدم جديد ؟ </p>
+                  <a className="fa-2x" href="./register">تسجيل مستخدم جديد</a>
+                  </div>
             </div>
             
           </div>

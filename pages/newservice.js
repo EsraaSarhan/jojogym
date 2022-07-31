@@ -30,7 +30,7 @@ const NewService = () => {
     defaultValues: { service_name: "", service_type: "", service_status: "", service_cost: "", sessions_count: 0 },
     onSubmit: (values) => 
     
-    fetch('http://jms-apis.herokuapp.com/api/v1/services/', {
+    fetch('https://gms-apis.herokuapp.com/api/v1/services/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -60,7 +60,7 @@ const NewService = () => {
     )
       });
 
-  //http://jms-apis.herokuapp.com/api/v1/customers/
+  //https://gms-apis.herokuapp.com/api/v1/customers/
 
   
   return (

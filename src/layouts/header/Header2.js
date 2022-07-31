@@ -27,7 +27,7 @@ const Header2 = () => {
     
     const logOut = () => {
 
-    fetch("http://jms-apis.herokuapp.com/api/v1/auth/logout/", {
+    fetch("https://gms-apis.herokuapp.com/api/v1/auth/logout/", {
   "method": "POST",
   "headers": {
     "content-type": "application/json",

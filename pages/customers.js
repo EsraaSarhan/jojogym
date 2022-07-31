@@ -9,6 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import { useForm } from "react-cool-form";
 import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 import Toast from 'react-bootstrap/Toast';
+import _ from 'underscore'
 
 
 
@@ -17,8 +18,24 @@ import useFetchData from '../src/components/customHooks/useFetchData'
 
 const Customers = () => {
 
-  const { data } = useFetchData('http://jms-apis.herokuapp.com/api/v1/customers/?page=1&page_size=100');
+  const { data } = useFetchData('https://gms-apis.herokuapp.com/api/v1/customers/?page=1&page_size=100');
   console.log(data);
+
+  if (data && data.results && data.results.length > 0) {
+    data.results.forEach((user) => {
+      user.sessionsServicesList = [];
+      if(user.services.length >0){
+        user.services.forEach((service) =>{
+          let session = _.findWhere(user.sessions, {service: service.id});
+          if(session){
+            let x = {"service_name": service.service_name, "service_count" : session.sessions_count};
+            user.sessionsServicesList.push(x)  
+          }
+              })
+      }
+    })
+console.log(data)
+  }
 
   let sort = 6;
   const [active, setActive] = useState(1);
@@ -45,21 +62,33 @@ const Customers = () => {
   }, [active]);
 
 
-  const [show, setShow] = useState(false);
+  const [showEditCustomerModal, setShowEditCustomerModal] = useState(false);
+  
+  const [showCustomerFingerModal, setShowCustomerFingerModal] = useState(false);
+
   const [showToast, setShowToast] = useState(false);
+
+  const [show, setShow] = useState(false);
+  const [selectedId, setSelectedId] = useState(0);
+
 
 //  setShowToast(true);
 
+const emptyInput = {
+  first_name: '',
+  last_name: '',
+  age: '',
+  mobile_number: ''
+};
+  //https://gms-apis.herokuapp.com/api/v1/customers/
 
-  const handleClose = () => setShow(false);
+  const { form, use, reset } = useForm({
+    // defaultValues: { first_name: selectedUser.first_name, last_name: selectedUser.last_name, mobile_number: selectedUser.mobile_number, age: selectedUser.age },
+   //defaultValues: { first_name: "", last_name: "", mobile_number: "", age: "" },
 
-  //http://jms-apis.herokuapp.com/api/v1/customers/
-
-  const { form, use } = useForm({
-    defaultValues: { first_name: selectedUser.first_name, last_name: selectedUser.last_name, mobile_number: selectedUser.mobile_number, age: selectedUser.age },
     onSubmit: (values) =>
 
-      fetch('http://jms-apis.herokuapp.com/api/v1/customers/' + selectedUser.id + '/', {
+      fetch('https://gms-apis.herokuapp.com/api/v1/customers/' + selectedUser.id + '/', {
         method: 'Put',
         headers: {
           'Accept': 'application/json',
@@ -74,9 +103,8 @@ const Customers = () => {
             console.log(result);
             // console.log(result.non_field_errors[0]);
             // this.setState({ datastore: items })        
-            if (result.key) {
+            if (result.id) {
 
-              setState({ redirect: true })
               window.location.href = '/customers';
 
             }
@@ -88,10 +116,30 @@ const Customers = () => {
           }
         )
   });
+  
+  const handleClose = () => {
+    //resetInputData();
+    //selectedUser = null;
+    // if(selectedUser){
+    //   setSelectedUser(null);
+    // }
+    if(showCustomerFingerModal){
+      setShowCustomerFingerModal(false)
+    }
+    if(showEditCustomerModal){
+    
+   if(selectedUser){
+      setSelectedUser([]);
+    }
+    console.log(form.current)
+    setShowEditCustomerModal(false)
+    }
+    //setShowEditCustomerModal(false);
+    //setShow(false)
+  }
 
   const handleShow = (userId) => {
-
-    fetch("http://jms-apis.herokuapp.com/api/v1/customers/" + userId + "/", {
+    fetch("https://gms-apis.herokuapp.com/api/v1/customers/" + userId + "/", {
       "method": "GET",
       "headers": {
         "content-type": "application/json",
@@ -103,13 +151,16 @@ const Customers = () => {
       .then(res => {
 
         console.log(res, "edit");
+        reset(emptyInput)
         if (res.id) {
           setSelectedUser(res);
           setisUserExist(true)
+          reset(res)
         }
 
 
-        setShow(true);
+        setShowEditCustomerModal(true);
+        
 
       })
       .catch(err => {
@@ -118,7 +169,7 @@ const Customers = () => {
   };
 
   const deleteUser = (userId) => {
-    fetch('http://jms-apis.herokuapp.com/api/v1/customers/' + userId + '/', {
+    fetch('https://gms-apis.herokuapp.com/api/v1/customers/' + userId + '/', {
       method: 'DELETE',
       headers:{
         'Authorization': 'Token ' + token
@@ -132,7 +183,7 @@ const Customers = () => {
         setInterval(() => {
           window.location = "./customers"
         }, 1000);
-        //data = useFetchData('http://jms-apis.herokuapp.com/api/v1/customers/?page=1&page_size=10');
+        //data = useFetchData('https://gms-apis.herokuapp.com/api/v1/customers/?page=1&page_size=10');
       },
       (error) => {
         console.log(error)
@@ -144,7 +195,7 @@ const Customers = () => {
 
   const fingerPrintSettings = (user) => {
     if (user.service_profile_status === "1") {
-      fetch('http://jms-apis.herokuapp.com/api/v1/customers/' + user.id + '/delete_user_fingerprint_profile/', {
+      fetch('https://gms-apis.herokuapp.com/api/v1/customers/' + user.id + '/delete_user_fingerprint_profile/', {
         method: 'DELETE',
         headers: {
           'Authorization': 'Token ' + token
@@ -175,7 +226,7 @@ const Customers = () => {
         )
     }
     else {
-      fetch('http://jms-apis.herokuapp.com/api/v1/customers/' + user.id + '/add_user_fingerprint_profile/', {
+      fetch('https://gms-apis.herokuapp.com/api/v1/customers/' + user.id + '/add_user_fingerprint_profile/', {
         method: 'POST',
         headers: {
           'Authorization': 'Token ' + token
@@ -209,6 +260,34 @@ const Customers = () => {
 
   };
 
+  const selectFingerId = (userId) => {
+    //setshowCustomerFingerModal(true)
+    setSelectedId(userId);
+    setShowCustomerFingerModal(true);
+    //setShow(true)
+  };
+
+  const setSelectedFinger = (fingerId) =>{
+    fetch("https://gms-apis.herokuapp.com/api/v1/customers/"+ selectedId + "/capture_user_fingerprint/", {
+      "method": "POST",
+      "headers": {
+        "content-type": "application/json",
+        "accept": "application/json",
+        'Authorization': 'Token ' + token
+      },
+      body:  JSON.stringify({fingerprint_id: fingerId}, undefined, 2)
+    })
+      .then(response => response.json())
+      .then(res => {
+       if(res){
+        window.location.href = '/customers';
+      }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+  }
 
 
   return (
@@ -254,8 +333,7 @@ const Customers = () => {
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">الأسم الأول</th>
-                    <th scope="col">الأسم الثاني</th>
+                    <th scope="col">الأسم</th>
                     <th scope="col">رقم الجوال </th>
                     
                     <th scope="col">العمر</th>
@@ -272,8 +350,7 @@ const Customers = () => {
                     data.results.map((user, index) => (
                       <tr key={user.id}>
                         <th scope="row">{index}</th>
-                        <td>{user.first_name}</td>
-                        <td>{user.last_name}</td>
+                        <td>{user.first_name} {user.last_name}</td>
                         <td>{user.mobile_number}</td>
                         <td>{user.age}</td>
                         <td>
@@ -284,19 +361,26 @@ const Customers = () => {
                             </span>
                               ))
                               )} */}
+<ul className="text-right services-sessions-list">
+{user.sessionsServicesList &&
 
-{user.services &&
-
-user.services.map((service) => {
+user.sessionsServicesList.map((service) => {
 
 
   return (
+<>
+<li>
+<i class="fa fa-circle"></i>
+<span dir="rtl">
+      {service.service_name}
+     </span>
+     : <span dir="rtl"> {service.service_count}</span></li>
+</>
+   
 
-      <li key={service.id}>
+        
 
-        {service.service_name}
-
-      </li>
+   
 
   );
 
@@ -304,25 +388,39 @@ user.services.map((service) => {
 })
 
 }
+</ul>
+
                         </td>
                         
                         <td>
+                        <button className="btn btn-action" onClick={event => handleShow(user.id)}><i className="fas fa-edit"></i></button>
+
                         {user && user.fingerprint_profile_status === "1" ? (
                                 <>
-                                  <button className="btn btn-action" title="ازالة العميلة من جهاز البصمة" onClick={event => fingerPrintSettings(user)}>
-                                    <i className="fas fa-minus-circle">
+                                  <button className="btn btn-action" title="ازالة ملف العميلة من جهاز البصمة" onClick={event => fingerPrintSettings(user)}>
+                                    {/* <i className="fas fa-minus-circle">
 
-                                    </i><i className="fas fa-fingerprint"></i>
+                                    </i><i className="fas fa-fingerprint"></i> */}
+                                     <i className="fas fa-file-minus"></i>
+                                  </button>
+                                  <button className="btn btn-action" title="ارسال رمز الاصبع الى جهاز البصمة" onClick={event => selectFingerId(user.id)}>
+                                    <i className="fas fa-fingerprint"></i>
                                   </button>
                                 </>) : (
-                                <button className="btn btn-action" title="اضافة العميلة الى جهاز البصمة" onClick={event => fingerPrintSettings(user)}>
-                                  <i className="fas fa-plus-circle">
+                                  <>
+                               
+                                <button className="btn btn-action" title="اضافة ملف العميلة الى جهاز البصمة" onClick={event => fingerPrintSettings(user)}>
+                                  {/* <i className="fas fa-plus-circle">
 
-                                  </i><i className="fas fa-fingerprint"></i>
+                                  </i><i className="fas fa-fingerprint"></i> */}
+
+                                  <i className="fas fa-file-plus"></i>
+
                                 </button>
+                                
+                                <button className="btn btn-action" onClick={event => deleteUser(user.id)}><i className="fas fa-trash"></i></button>
+                                </>
                               )}
-                          <button className="btn btn-action" onClick={event => handleShow(user.id)}><i className="fas fa-edit"></i></button>
-                          <button className="btn btn-action" onClick={event => deleteUser(user.id)}><i className="fas fa-trash"></i></button>
                         </td>
                       </tr>
 
@@ -338,13 +436,13 @@ user.services.map((service) => {
         </div>
       </section>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={showEditCustomerModal} onHide={handleClose} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>تعديل بيانات العميلة</Modal.Title>
         </Modal.Header>
         <Modal.Body>
 
-          {isUserExist ? (
+          {isUserExist && selectedUser ? (
             <>
               <form 
                 ref={form} noValidate
@@ -437,6 +535,47 @@ user.services.map((service) => {
 
       </Modal>
 
+      <Modal show={showCustomerFingerModal} onHide={handleClose} size="lg">
+
+        <Modal.Header closeButton>
+          <Modal.Title>اختيار رقم الاصبع</Modal.Title>
+        </Modal.Header>/
+        <Modal.Body>
+          <div className="hands-container ">
+            <div className="container first-hand">
+              <div className="fingers" onClick={event => setSelectedFinger(5)}>
+                <div className="nails"></div>
+              </div>
+              <div className="fingers" onClick={event => setSelectedFinger(6)}>
+                <div className="nails"></div>
+              </div>
+              <div className="fingers" onClick={event => setSelectedFinger(7)}>
+                <div className="nails"></div>
+              </div>
+              <div className="fingers" onClick={event => setSelectedFinger(8)}>
+                <div className="nails"></div>
+              </div>
+              <div id="last" onClick={event => setSelectedFinger(9)}></div>
+            </div>
+
+            <div className="container second-hand">
+              <div className="fingers" onClick={event => setSelectedFinger(0)}>
+                <div className="nails"></div>
+              </div>
+              <div className="fingers" onClick={event => setSelectedFinger(1)}>
+                <div className="nails"></div>
+              </div>
+              <div className="fingers" onClick={event => setSelectedFinger(2)}>
+                <div className="nails"></div>
+              </div>
+              <div className="fingers" onClick={event => setSelectedFinger(3)}>
+                <div className="nails"></div>
+              </div>
+              <div id="last" onClick={event => setSelectedFinger(4)}></div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
 
       
     </Layout>

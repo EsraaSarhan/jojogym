@@ -25,7 +25,7 @@ const Services = () => {
   const [active, setActive] = useState(1);
 
 
-  const { data } = useFetchData('http://jms-apis.herokuapp.com/api/v1/services/?page=' + active + '&page_size=100');
+  const { data } = useFetchData('https://gms-apis.herokuapp.com/api/v1/services/?page=' + active + '&page_size=100');
   console.log(data);
   // if (data && data.results && data.results.length > 0) {
   //   pageNumber = Math.round(data.count / 2);
@@ -49,7 +49,7 @@ const Services = () => {
   const [isServiceSaved, setisServiceSaved] = useState(false);
 
 
-  const [show, setShow] = useState(false);
+  const [editShow, setShow] = useState(false);
   const [showDeletedToast, setshowDeletedToast] = useState(false);
   const [showLinkedToast, setshowLinkedToast] = useState(false);
   const [showUnLinkedToast, setshowUnLinkedToast] = useState(false);
@@ -64,7 +64,7 @@ const Services = () => {
     },
     onSubmit: (values) =>
 
-      fetch('http://jms-apis.herokuapp.com/api/v1/services/' + selectedService.id + '/', {
+      fetch('https://gms-apis.herokuapp.com/api/v1/services/' + selectedService.id + '/', {
         method: 'Put',
         headers: {
           'Accept': 'application/json',
@@ -99,7 +99,7 @@ const Services = () => {
   // }
   const handleShow = (serviceId) => {
 
-    fetch("http://jms-apis.herokuapp.com/api/v1/services/" + serviceId + "/", {
+    fetch("https://gms-apis.herokuapp.com/api/v1/services/" + serviceId + "/", {
       "method": "GET",
       "headers": {
         "content-type": "application/json",
@@ -126,7 +126,7 @@ const Services = () => {
   };
 
   const deleteService = (serviceId) => {
-    fetch('http://jms-apis.herokuapp.com/api/v1/services/' + serviceId + '/', {
+    fetch('https://gms-apis.herokuapp.com/api/v1/services/' + serviceId + '/', {
       method: 'DELETE',
       headers: {
         'Authorization': 'Token ' + token
@@ -140,7 +140,7 @@ const Services = () => {
           setInterval(() => {
             window.location = "./services"
           }, 1000);
-          //data = useFetchData('http://jms-apis.herokuapp.com/api/v1/customers/?page=1&page_size=10');
+          //data = useFetchData('https://gms-apis.herokuapp.com/api/v1/customers/?page=1&page_size=10');
         },
         (error) => {
           console.log(error)
@@ -150,10 +150,11 @@ const Services = () => {
       )
   };
 
+
   const fingerPrintSettings = (service) => {
-    //http://jms-apis.herokuapp.com/api/v1/services/5/add_fingerprint_service/'
+    //https://gms-apis.herokuapp.com/api/v1/services/5/add_fingerprint_service/'
     if (service.service_profile_status === "1") {
-      fetch('http://jms-apis.herokuapp.com/api/v1/services/' + service.id + '/delete_fingerprint_service/', {
+      fetch('https://gms-apis.herokuapp.com/api/v1/services/' + service.id + '/delete_fingerprint_service/', {
         method: 'DELETE',
         headers: {
           'Authorization': 'Token ' + token
@@ -166,7 +167,6 @@ const Services = () => {
             console.log(result)
             if (result.id) {
               setshowUnLinkedToast(true);
-              service.service_profile_status = "2";
               setInterval(() => {
                 window.location = "./services"
               }, 1000);
@@ -184,7 +184,7 @@ const Services = () => {
         )
     }
     else {
-      fetch('http://jms-apis.herokuapp.com/api/v1/services/' + service.id + '/add_fingerprint_service/', {
+      fetch('https://gms-apis.herokuapp.com/api/v1/services/' + service.id + '/add_fingerprint_service/', {
         method: 'POST',
         headers: {
           'Authorization': 'Token ' + token
@@ -272,30 +272,39 @@ const Services = () => {
                       {data.results && (
                         data.results.map((service, index) => (
                           <tr key={service.id}>
-                            <th scope="row">{index}</th>
+                            <th scope="row">{index+1}</th>
                             <td>{service.service_name}</td>
                             <td>{service.service_type}</td>
                             <td>{service.service_status}</td>
                             <td>{service.service_cost}</td>
                             <td>{service.sessions_count}</td>
                             <td>
-                              {service && service.service_profile_status === "1" ? (
-                                <>
-                                  <button className="btn btn-action" title="ازالة الخدمة من جهاز البصمة" onClick={event => fingerPrintSettings(service)}>
-                                    <i className="fas fa-minus-circle">
-
-                                    </i><i className="fas fa-fingerprint"></i>
-                                  </button>
-                                </>) : (
-                                <button className="btn btn-action" title="اضافة الخدمةالى جهاز البصمة" onClick={event => fingerPrintSettings(service)}>
-                                  <i className="fas fa-plus-circle">
-
-                                  </i><i className="fas fa-fingerprint"></i>
-                                </button>
-                              )}
+                              
 
                               <button className="btn btn-action" title="تعديل الخدمة" onClick={event => handleShow(service.id)}><i className="fas fa-edit"></i></button>
-                              <button className="btn btn-action" title="مسح الخدمة" onClick={event => deleteService(service.id)}><i className="fas fa-trash"></i></button>
+
+                              {service && service.service_profile_status === "1" ? (
+                                <>
+                                 <button className="btn btn-action" title="ازالة الخدمة من جهاز البصمة" onClick={event => fingerPrintSettings(service)}>
+                                    {/* <i className="fas fa-minus-circle">
+
+                                    </i><i className="fas fa-fingerprint"></i> */}
+                                    <i className="fas fa-file-minus"></i>
+                                  </button>
+                                </>) : (
+                                  <>
+                                  <button className="btn btn-action" title="اضافة الخدمةالى جهاز البصمة" onClick={event => fingerPrintSettings(service)}>
+                                  {/* <i className="fas fa-plus-circle">
+
+                                  </i><i className="fas fa-fingerprint"></i> */}
+                                  <i className="fas fa-file-plus"></i>
+                                </button>
+                                <button className="btn btn-action" title="مسح الخدمة" onClick={event => deleteService(service.id)}><i className="fas fa-trash"></i></button>
+
+                                </>
+                              )}
+
+                              
                             </td>
                           </tr>
 
@@ -321,11 +330,12 @@ const Services = () => {
         </div>
       </section>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={editShow} onHide={handleClose} size="lg">
 
         <Modal.Header closeButton>
           <Modal.Title>تعديل بيانات العميلة</Modal.Title>
         </Modal.Header>/
+       
         <Modal.Body>
           {isServiceSaved ? (
             <>

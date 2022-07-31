@@ -2535,7 +2535,7 @@ a:focus {
     font-size: 18px;
     background: transparent;
 }
-.fa-edit{
+.fa-edit, .fa-file-minus, .fa-file-plus{
     color: var(--primary-color2);
 }
 
@@ -2560,3 +2560,114 @@ button:disabled{
     cursor: none;
     user-select: none;
 }
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .hands-container {
+    display: flex;
+  }
+  
+  .hands-container  .container {
+    width: 400px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .services-sessions-list{
+    font-size: 18px;
+  }
+
+  .fa-circle{
+    color: var(--primary-color3);
+
+font-size: 12px;
+margin-left: 5px;
+  }
+  .fingers {
+    background-color: #f6d186;
+    width: 45px;
+    margin-right: 5px;
+    border-radius:  20px 20px 15px 15px;
+    position: relative;
+  }
+
+  .fingers:hover,
+  #last:hover{
+    border: solid 5px var(--primary-color3);
+    cursor: pointer;
+  }
+  
+  .fingers:nth-child(1) {
+    height: 130px;
+    top: 5px;
+  }
+  
+  .fingers:nth-child(2) {
+    height: 150px;
+  }
+  
+  .fingers:nth-child(3) {
+    height: 170px;
+    bottom: 5px;
+  }
+  
+  .fingers:nth-child(4) {
+    height: 150px;
+  }
+  
+  #last {
+    width: 60px;
+    height: 45px;
+    position: relative;
+    top: 10px;
+    background-color: #f6d186;
+    border-radius: 0px 15px 40px 0px;
+  }
+  
+  .nails {
+    width: 30px;
+    height: 30px;
+    border-radius: 50px 50px 15px 15px;
+    background-color: #fcf7bb;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .fingers::after,
+  .fingers::before {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 5px;
+    background-color: #e6a157;
+    border-radius: 5px;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .fingers::before {
+    bottom: 20px;
+  }
+  
+  .first-hand #last{
+        border-radius: 0 40px 15px 0;
+        transform: rotate(180deg);
+        margin-right: 5px;
+
+  }
+  .second-hand{
+    flex-direction: row-reverse;
+    
+  }
+  
+  .second-hand #last{
+  }
