@@ -145,6 +145,10 @@ const [errorsList,setErrorsList] = useState([]);
                       </button>
                     </div>
             </form>
+
+            <div className='mt-3'>
+                  <a className="fa-2x" href="./login">تسجيل الدخول</a>
+                  </div>
             </div>
             
           </div>

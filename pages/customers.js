@@ -78,7 +78,8 @@ const emptyInput = {
   first_name: '',
   last_name: '',
   age: '',
-  mobile_number: ''
+  mobile_number: '',
+  services: []
 };
   //https://gms-apis.herokuapp.com/api/v1/customers/
 
@@ -153,13 +154,20 @@ const emptyInput = {
         console.log(res, "edit");
         reset(emptyInput)
         if (res.id) {
-          setSelectedUser(res);
-          setisUserExist(true)
-          reset(res)
+          if(res.services && res.services.length>0){
+            res.sessionsServicesList = [];
+            res.services.forEach((user) => {
+              res.sessionsServicesList.push(user)
+            })
+          }
+          console.log(res)
         }
-
-
+        
+        setSelectedUser(res);
+        setisUserExist(true);
+        reset(res);
         setShowEditCustomerModal(true);
+     
         
 
       })
@@ -370,7 +378,7 @@ user.sessionsServicesList.map((service) => {
   return (
 <>
 <li>
-<i class="fa fa-circle"></i>
+<i className="fa fa-circle"></i>
 <span dir="rtl">
       {service.service_name}
      </span>
@@ -512,12 +520,12 @@ user.sessionsServicesList.map((service) => {
                     </g>
                   </svg>
                 </div>
-                <div className="row-form st-1 mg-bt-20">
+                {/* <div className="row-form st-1 mg-bt-20">
                   <DropdownMultiselect
-                    options={["Australia", "Canada", "USA", "Poland", "Spain", "France"]}
-                    name="countries"
+                    options={selectedUser.sessionsServicesList}
+                    name="services"
                   />
-                </div>
+                </div> */}
 
                 <div className="row-form ml-auto mt-5 mr-auto">
                   <button className="fl-btn st-14">
